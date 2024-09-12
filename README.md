@@ -10,6 +10,7 @@ Were you used to using Area Book on your mission and wish there was a dating equ
 Then **MarryaBook** is for you!! (name subject to change)  
 The website works in a way similar to other dating sites/apps, but with a key improevment...   
 MarryaBook uses your friends and friends of friends to find your future wife. After linking your social media, Marryabook will give you suggestions on who to go on dates with.  
+  
 Other features:  
   -Calendar to help you plan times for dates  
   -Gives you date ideas  
@@ -19,15 +20,19 @@ Other features:
 [Here](https://drive.google.com/file/d/1Eb0WA7tvIowid-mEEZiHedwYJ79e5i2W/view?usp=sharing) is an example of what the website home page might look like  
 
 ## Technologies  
-here is an example of how each technology might be represented in this website:    
-**HTML:**  
-**CSS:**  
-**JavaScript:**  
-**React:**  
-**Web Service:**  
-**Authentication:**  
-**Database Data:**  
-**WebSocket Data:**  
+Here is an example of how each technology might be represented in this website:  
+  
+**HTML:** HTML that gives an effective structure for the web pages.  
+**CSS:** Makes the website look presentable and appealing. Good pictures, style, and design.  
+**JavaScript:** Provide Login, account, page naigation, matching, buttons.  
+**React:** Used to make effective UI and components.  
+**Web Service:** Used for functionality of components, including:  
+ -Being able to match with others  
+ -Displaying pictures of potential matches  
+ -Retrieving matches  
+**Authentication:** Used to make the account users will make.  
+**Database Data:** Stores account data, including matches and chats.  
+**WebSocket Data:** Used to allow matching and chatting with dates  
 
 
 
