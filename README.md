@@ -7,7 +7,9 @@ Welcome to my startup. I will soon be a billionaire i swear
 ## Intro to the Site  
 Are you a returned missionary who is sick of not being able to find the one?  
 Were you used to using Area Book on your mission and wish there was a dating equivelant?  
-Then **MarryaBook** is for you!! (name subject to change)  
+  
+**MarryaBook** is for you!! (name subject to change)  
+  
 The website works in a way similar to other dating sites/apps, but with a key improevment...   
 MarryaBook uses your friends and friends of friends to find your future wife. After linking your social media, Marryabook will give you suggestions on who to go on dates with.  
   
