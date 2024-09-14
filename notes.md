@@ -9,10 +9,10 @@ I also learned how to manage conflicts, and how to format GitHub.
 
 ## Creating The Website!!!
 I learned how to launch my first website using AWS. I got it done successfully, but pretty much all of it went over my head lol. I know how to follow a tutorial though!!
-[here is the link to the website.](http://35.172.60.97) It is going to become something epic >:)
+[here is the link to the website.](https://35.172.60.97) It is going to become something epic >:)
 to get in from the console I gotta do ssh [key pair file] ubuntu@[ip address]
 
 ## Domain name shenanigans  
 I learned how to connect a domain name to my server, and also how to make a web server secure.  
 It wasn't a very fun process, because I must've missed some key instruction somewhere.
-Nevertheless, say hello to [marryabook.com](marryabook.com)
+Nevertheless, say hello to [marryabook.com](https://marryabook.com)
