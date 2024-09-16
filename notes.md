@@ -15,4 +15,8 @@ to get in from the console I gotta do ssh [key pair file] ubuntu@[ip address]
 ## Domain name shenanigans  
 I learned how to connect a domain name to my server, and also how to make a web server secure.  
 It wasn't a very fun process, because I must've missed some key instruction somewhere.
-Nevertheless, say hello to [marryabook.com](https://marryabook.com)
+Nevertheless, say hello to [marryabook.com](https://marryabook.com)  
+
+## HTML fun  
+I was introduced to the main concepts and general flow of HTML, but I am not super comfortable writing my own HTML page.  
+Luckily there is always the future! HTML seems pretty easy though, and seems to allow a margin of error, which is more than most coding can say.
