@@ -28,4 +28,4 @@ HTML -> Head -> Title -> Text
 Links: <a href="link" />  
 html, head, title, body,  
 div, span, h<1-9>(size), p, tale, ol, ul, a, img  
-use w3 schools online tutorials
+use w3 schools online tutorials -- epic
