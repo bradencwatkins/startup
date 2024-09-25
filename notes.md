@@ -25,7 +25,11 @@ Luckily there is always the future! HTML seems pretty easy though, and seems to 
 HTML -> Head -> Title -> Text  
 <p></p> is paragraph - normal text  
 <img alt="image name" src="link" />  
-Links: <a href="link" />  
+Links: <a href="link" > </a>  
 html, head, title, body,  
 div, span, h<1-9>(size), p, tale, ol, ul, a, img  
-use w3 schools online tutorials -- epic
+use w3 schools online tutorials -- epic  
+
+## Deploying Simon  
+I learned how t deploy changes to my website using a deploy file.  
+It was a headache. It would not work. I had to do many different things, but it kinda helped because now I have a greater insight and understanding about the system.  
