@@ -36,5 +36,10 @@ Here is an example of how each technology might be represented in this website:
 **Database Data:** Stores account data, including matches and chats.  
 **WebSocket Data:** Used to allow matching and chatting with dates  
 
+## WEBSITE LAUNCH  
+The website has been launched with 6 pages including:  
+Home, find matches, account, advice, messaging, and about. It is only barebone HTML but its nice to start seeing at least some  
+resemblance of a website. Very cool.  
+
 
 
