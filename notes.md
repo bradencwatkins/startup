@@ -33,3 +33,8 @@ use w3 schools online tutorials -- epic
 ## Deploying Simon  
 I learned how t deploy changes to my website using a deploy file.  
 It was a headache. It would not work. I had to do many different things, but it kinda helped because now I have a greater insight and understanding about the system.  
+
+## Deploying the website  
+I learned a whole ton about HTML during this assignment. Before, we only did basic replacements, but now I had to go in to do full fledged development.  
+It was fun, but frustrating at times. It was really nice to have a reference page like the simon one to pull form. If I didn't have that it would probably  
+be a different story.  
