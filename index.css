@@ -1,0 +1,8 @@
+.box {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: #9EC5E5;
+    border-radius: 5px;
+}

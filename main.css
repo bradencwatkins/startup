@@ -2,3 +2,11 @@
 body {
     font-family: "Roboto", sans-serif;
 }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9EC5E5;
+    height: 100px;
+}
