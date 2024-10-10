@@ -37,4 +37,13 @@ It was a headache. It would not work. I had to do many different things, but it 
 ## Deploying the website  
 I learned a whole ton about HTML during this assignment. Before, we only did basic replacements, but now I had to go in to do full fledged development.  
 It was fun, but frustrating at times. It was really nice to have a reference page like the simon one to pull form. If I didn't have that it would probably  
-be a different story.  
+be a different story.   
+
+## CSS  
+CSS is great because of how it changes your website form dinky HTML to really cool styled stuff.  
+It has an enormous library of functions and things it does, and it seems endless. Its really cool to be able to implement those things.
+
+## Javascript  
+I learned my first things about java script!! it was interesting. I actually like javascript, it seems a lot more user friendly than c++.  
+I just did some arrays with arrow parameters. I dont fully know what they do, but I got the start.
+
