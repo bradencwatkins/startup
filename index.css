@@ -30,3 +30,9 @@ main {
 body {
     box-sizing: border-box;
 }
+
+footer {
+    display: flex;
+    background-color: #9EC5E5;
+    height: 100%
+}
