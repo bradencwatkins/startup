@@ -6,3 +6,21 @@
     background-color: #9EC5E5;
     border-radius: 5px;
 }
+
+.section1 {
+    flex: 2;
+    background-color: #E5A9A9;
+    padding: 20px;
+}
+
+.section2 {
+    flex: 1;
+    padding: 20px;
+}
+
+main {
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+    background-color: #E5A9A9;
+    height: 100vh;
+}
