@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="search.css" />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -13,36 +14,59 @@
         <title>Marryabook Find Love</title>
     </head>
     <body>
-        <header>
-            <h1>MarryaBook</h1>
-        <nav>
-            <table border="1">
-                <tr>
-                    <td><a href="index.html">Home</a></td>
-                    <td><a href="account.html">Account</a></td>
-                    <td><a href="findlove.html">Find Love</a></td>
-                    <td><a href="advice.html">Advice</a></td>
-                    <td><a href="about.html">About</a></td>
-                    <td><a href="matches.html">Matches</a></td>
-                </tr>
-            </table>
-        </nav>
-        <hr />
+        <header class="box">
+            <div class="title">
+                <h1>MarryaBook</h1>
+            </div>
+            <nav class="navbar navbar-expand-lg custom-navbar" style="background-color: #9EC5E5;">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="account.html">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="findlove.html">Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="matches.html">Your Matches</a>
+                            </li>
+                            <li class="nav-item"></li>
+                                <a class="nav-link" href="advice.html">Advice</a>
+                            </li>
+                            <li class="nav-item"></li>
+                                <a class="nav-link" href="about.html">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </header>
 
         <main>
-            <h2>Ellen Johnson</h2>
-            <img src="ellen.jpg" width="300" height="400">
-            <p>Age: 21  Height: 5'2"</p>
-            <hr />
+            <div class="swipey">
+                <h2>Ellen Johnson</h2>
+                <img src="ellen.jpg" width="300" height="400">
+                <p>Age: 21  Height: 5'2"</p>
+                <button type="button" class="btn btn-success">
+                    <i class="bi bi-check"></i> <!-- Bootstrap Icon for check -->
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <i class="bi bi-x"></i> <!-- Bootstrap Icon for X -->
+                </button>
+            </div>
+            
+            
         </main>
 
         <footer>
-            <div>
-                <button type="submit">Yes</button>
-                <button type="submit">No</button>
-            </div>  
-            <hr />  
+              
         </footer>
     <body>
 </html>
