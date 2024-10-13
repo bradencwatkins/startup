@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="advice.css" />
         <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -13,31 +14,54 @@
         <title>Marryabook Swipe</title>
     </head>
     <body>
-        <header>
-            <h1>MarryaBook</h1>
-        <nav>
-            <table border="1">
-                <tr>
-                    <td><a href="index.html">Home</a></td>
-                    <td><a href="account.html">Account</a></td>
-                    <td><a href="findlove.html">Find Love</a></td>
-                    <td><a href="advice.html">Advice</a></td>
-                    <td><a href="about.html">About</a></td>
-                    <td><a href="matches.html">Matches</a></td>
-                </tr>
-            </table>
-        </nav>
-        <hr />
+        <header class="box">
+            <div class="title">
+                <h1>MarryaBook</h1>
+            </div>
+            <nav class="navbar navbar-expand-lg custom-navbar" style="background-color: #9EC5E5;">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="account.html">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="findlove.html">Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="matches.html">Your Matches</a>
+                            </li>
+                            <li class="nav-item"></li>
+                                <a class="nav-link" href="advice.html">Advice</a>
+                            </li>
+                            <li class="nav-item"></li>
+                                <a class="nav-link" href="about.html">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </header>
 
-        <main>
+        
+        <main class="main1">
             <h2>Advice from our Prophets and Apostles</h2>
-            <hr />
-            <h3>President Thomas S. Monson</h3>
-            <p>“The most important of the Lord’s work you and I will ever do will be within the walls of our own homes.”</p>
-            <h3>Dieter F. Uchtdorf</h3>
-            <p>"get married lol"</p>
-            <hr />
         </main>
+        <main class="main2">
+            <div class="list">
+                <h3>President Thomas S. Monson</h3>
+                <p>“The most important of the Lord’s work you and I will ever do will be within the walls of our own homes.”</p>
+            <div class="list">
+                <h3>Dieter F. Uchtdorf</h3>
+            <p>"get married lol"</p>
+            </div>
+        </main>
+        <footer></footer>
     <body>
 </html>
