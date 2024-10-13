@@ -25,8 +25,13 @@
 
 .login {
     background-color: #9EC5E5 !important;
-    border-color: #628daf !important;
-    color: black !important;
+    border-color: black !important;
+    color: white !important;
+    text-shadow: 
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black !important;
 }
 
 footer {

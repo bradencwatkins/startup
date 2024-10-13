@@ -53,9 +53,15 @@ footer {
     background-color: #E5A9A9 !important;
     font-family: "Roboto", sans-serif !important;
     font-weight: bold !important;
-    border-color: #628daf !important;
     width: 75%;
     margin: 0;
+    border-color: black !important;
+    color: white !important;
+    text-shadow: 
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black !important;
 }
 
 .github {
