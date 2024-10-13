@@ -29,10 +29,35 @@ main {
 
 body {
     box-sizing: border-box;
+    height: 100vh
 }
 
 footer {
     display: flex;
+    flex-direction: column;
+    padding: 1%;
     background-color: #9EC5E5;
-    height: 100%
+    border: 2px solid #628daf;
+    height: 500 px;
+}
+.botton {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.custom-btn {
+    background-color: #E5A9A9;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    color: black;
+    width: 75%
+}
+.github {
+    height: 50px;
+    display: flex;
+    background-color: #628daf;
+    justify-content: center;
+    align-items: center;
 }
