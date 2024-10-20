@@ -1,0 +1,274 @@
+Midterm Questions
+In the following code, what does the link element do?
+<link rel="stylesheet" href="styles.css">
+In this example:
+rel="stylesheet" specifies the relationship of the linked resource to the document, in this case, it's a stylesheet.
+href="styles.css" defines the URL (or path) to the external resource.
+In the following code,  what does a div tag do?
+Block-level element: A <div> is a block-level element, meaning it takes up the full width available and starts on a new line by default. Other block-level elements include headings (<h1>, <h2>, etc.), paragraphs (<p>), and lists (<ul>, <ol>).
+
+In the following code, what is the difference between the #title and .grid selector?
+Uniqueness:
+#title: Targets a unique element (one per page) because IDs should be unique in HTML.
+.grid: Targets multiple elements since classes can be shared among multiple elements.
+Selector Symbol:
+#title: Uses the # symbol to select an element by its ID.
+.grid: Uses the . symbol to select elements by their class.
+Usage:
+#title: Best used for styling specific, unique elements on a page (e.g., a single header, main content area).
+.grid: Best used for styling groups of elements that share the same characteristics (e.g., grid layouts, buttons, cards).
+In the following code, what is the difference between padding and margin?
+Padding is the space inside the element, between the element’s content and its border.
+It increases the size of the element’s internal space without affecting the element's position relative to other elements.
+Padding is applied inside the border of an element.
+Margin is the space outside the element, between the element’s border and surrounding elements.
+It affects the external spacing between elements, determining how far apart they are from one another.
+Margins collapse vertically (when two block-level elements are next to each other, their vertical margins combine rather than add).
+
+Given this HTML and this CSS how will the images be displayed using flex?
+
+Flexbox arranges the images in a flexible row or column, depending on the container’s size.
+Wrapping allows the images to move to the next row if there’s not enough space on a single line.
+Justify-content and gap ensure proper alignment and spacing between the images.
+display: flex on .image-container: This makes the container a flex container and all its child elements (<img> elements) become flex items. Flexbox controls the layout and alignment of the images.
+
+What does the following padding CSS do?
+The padding property in CSS controls the space between the content of an element and its border. Padding can be applied to all four sides of an element: top, right, bottom, and left.
+1. Single Value Padding:
+If you use a single value, that padding is applied to all four sides of the element
+padding: 20px;
+Effect: 20 pixels of padding will be applied to the top, right, bottom, and left sides of the element.
+2. Two Value Padding:
+If two values are provided, the first value applies to the top and bottom, and the second value applies to the left and right.
+css
+Copy code
+padding: 10px 20px;
+
+What does the following code using arrow syntax function declaration do?
+const add = (a, b) => a + b;
+If the function body contains just a single expression, you can omit the braces {} and the return keyword. The result of the expression is implicitly returned.
+If the function consists of a single expression, the result is automatically returned without needing the return keyword.
+Arrow functions do not have their own this context. Instead, they inherit the this value from their surrounding (lexical) scope. This is a key difference from traditional function declarations.
+
+What does the following code using map with an array output?
+In JavaScript, the map() function is used to create a new array by applying a function to each element of an original array. It does not modify the original array; instead, it returns a new array with the transformed values.
+const newArray = array.map(callback(currentValue, index, array) { // return value for new array });
+const numbers = [1, 2, 3, 4]; const doubled = numbers.map(number => number * 2); console.log(doubled); // Output: [2, 4, 6, 8]
+
+What does the following code output using getElementByID and addEventListener?
+This method is used to select an HTML element based on its id attribute.
+const element = document.getElementById('id');
+This method is used to attach an event handler to an HTML element.
+It takes two parameters:
+The type of event (e.g., 'click', 'mouseover', 'input').
+The function to run when the event occurs.
+element.addEventListener('event', function);
+A <button> element with the id="myButton".
+A <p> element with the id="output".
+JavaScript Behavior:
+getElementById('myButton'): This retrieves the button with id="myButton".
+addEventListener('click', ...): This attaches a click event to the button.
+When the button is clicked, the event handler runs, and it changes the text content of the paragraph (<p id="output">) to "Button clicked!".
+What does the following line of Javascript do using a # selector?
+n JavaScript, the # selector is used to select an element by its id. In CSS, the # symbol is used to target an element with a specific id. When combined with JavaScript methods like querySelector, it allows you to manipulate the DOM element with that id.
+document.querySelector():
+This method selects the first element in the DOM that matches a given CSS selector. In this case, it’s selecting an element with the id="myElement".
+#myElement:
+The # is used to specify that you're targeting an element by its id. The string '#myElement' is a CSS selector that matches any HTML element with id="myElement".
+Which of the following are true? (mark all that are true about the DOM)
+The DOM is a representation of the HTML document.
+The DOM is an in-memory representation of the structure of a web document, including its elements, attributes, and content.
+The DOM is structured as a tree of nodes.
+The DOM is a hierarchical tree structure where each element, attribute, and piece of text in the document is represented as a "node." The root node of the tree is the document object.
+JavaScript can manipulate the DOM.
+Using JavaScript, you can interact with and modify the DOM. You can add, remove, or update elements, attributes, and content dynamically.
+The DOM is platform-independent.
+The DOM is an interface that can be used across different programming environments, and it works independently of the platform or browser.
+The DOM allows event handling.
+The DOM enables interaction between users and web pages through events (such as clicks, key presses, etc.). Event listeners can be attached to DOM elements.
+The DOM provides methods to select and manipulate elements.
+You can use methods like document.getElementById(), document.querySelector(), and document.getElementsByClassName() to select elements in the DOM, and manipulate them using properties like textContent, innerHTML, and style.
+DOM nodes can be created dynamically.
+You can dynamically create new elements using methods like document.createElement() and append them to the DOM tree using appendChild().
+False Statements (Common Misconceptions):
+The DOM is part of JavaScript.
+False. The DOM is not part of JavaScript. It is a separate API that can be manipulated by JavaScript, but it’s actually part of web browsers.
+The DOM is the same across all browsers.
+False. While modern browsers follow web standards, there can be slight differences in how they implement or interpret certain DOM features.
+By default, the HTML span element has a default CSS display property value of: 
+Inline Elements: Elements with a display value of inline do not start on a new line and only take up as much width as necessary. They can contain other inline elements and text but cannot contain block-level elements.
+Common Usage: The <span> element is often used to apply styles or manipulate a portion of text within a block of content without disrupting the flow of text, making it useful for inline styling or JavaScript manipulations.
+<p>This is a <span style="color: blue;">blue</span> text within a paragraph.</p>
+In this example, the word "blue" is styled with a different color but remains inline with the rest of the paragraph text.
+How would you use CSS to change all the div elements to have a background color of red?
+div { background-color: red; }
+
+How would you display an image with a hyperlink in HTML?
+<a href="URL"> <img src="image-source.jpg" alt="Description of image"> </a>
+
+In the CSS box model, what is the ordering of the box layers starting at the inside and working out?
+1. Content
+2. Padding
+3. Border
+4. Margin
+
+Given the following HTML, what CSS would you use to set the text "trouble" to green and leave the "double" text unaffected?
+<p> <span class="green-text">trouble</span> double </p>
+
+What will the following code output when executed using a for loop and console.log?
+for (let i = 0; i < 5; i++) { console.log(i); }
+0 1 2 3 4
+
+How would you use JavaScript to select an element with the id of “byu” and change the text 
+color of that element to green?
+function changeTextColor() { const element = document.getElementById('byu'); // Select the element by id element.style.color = 'green'; // Change the text color to green }
+document.getElementById('changeColorButton').addEventListener('click', changeTextColor);
+
+What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?
+<p> <ol> <ul. <h2> <h1> <h3> 
+
+How do you declare the document type to be html?
+<!DOCTYPE html>
+
+What is valid javascript syntax for if, else, for, while, switch statements?
+if (condition) { // code to be executed if condition is true }
+if (condition) { // code to be executed if condition is true } else { // code to be executed if condition is false }
+if (condition1) { // code to be executed if condition1 is true } else if (condition2) { // code to be executed if condition2 is true } else { // code to be executed if both conditions are false }
+for (let i = 0; i < 5; i++) { console.log(i); }
+while (i < 5) { console.log(i); i++; }
+let fruit = "apple"; switch (fruit) { case "banana": console.log("Banana is yellow."); break; case "apple": console.log("Apple is red or green."); break; default: console.log("Unknown fruit."); }
+
+What is the correct syntax for creating a javascript object?
+const person = { name: "John", age: 30, isStudent: false, greet: function() { console.log("Hello, my name is " + this.name); } };
+ // Accessing object properties
+ console.log(person.name); // Output: John 
+console.log(person.age); // Output: 30
+ person.greet(); // Output: Hello, my name is John
+
+Is it possible to add new properties to javascript objects?
+Yes >:)
+
+If you want to include JavaScript on an HTML page, which tag do you use?
+<script>
+ // Inline JavaScript code
+ function greet() { console.log("Hello, World!"); } 
+</script>
+
+Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?
+<body> 
+<p id="animal">animal</p> 
+<p id="fish">fish</p> 
+<button id="changeTextButton">Change Animal to Crow</button>
+ <script> // JavaScript to change the text document.getElementById('changeTextButton').addEventListener('click', function() { document.getElementById('animal').textContent = 'crow'; }); 
+</script>
+
+Which of the following correctly describes JSON?
+Text-Based Format: JSON is a text format that is completely language-independent, meaning it can be used with any programming language, though it is primarily based on a subset of JavaScript.
+Key-Value Pairs: JSON data is structured as key-value pairs. Each key is a string (enclosed in double quotes), followed by a colon and the corresponding value. For example:
+json
+Copy code
+{
+    "name": "Alice",
+    "age": 30,
+    "isStudent": false
+}
+
+Data Types: JSON supports several basic data types, including:
+Strings (enclosed in double quotes)
+Numbers (integer or floating-point)
+Booleans (true or false)
+Arrays (ordered lists of values)
+Objects (unordered collections of key-value pairs)
+Null (null)
+Hierarchical Structure: JSON can represent complex data structures. Objects can contain other objects, and arrays can contain objects or other arrays. This allows for nested data representation.
+Interoperability: JSON is widely used for data exchange between a server and a web application, making it a popular choice for APIs. It is especially common in web development for transmitting data between a client (browser) and a server.
+No Comments: JSON does not allow comments, making it a strictly data-only format without any additional annotations or explanations.
+
+What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo  do?
+Chmod: Changes the file permissions for a file or directory.
+Pwd Description: Prints the current working directory (the path of the directory you are currently in).
+Cd:Description: Changes the current directory to the specified directory.
+Ls:Lists the files and directories in the current directory.
+Vim:A text editor that is used for editing files.
+Nano: A simple text editor for Unix-like systems.
+Mkdir: Creates a new directory.
+Mv: Moves or renames files and directories.
+Rm:Removes (deletes) files or directories.
+Man:Displays the manual (help) page for a command, providing detailed information about its usage.
+Ssh:Securely connects to a remote server using the SSH (Secure Shell) protocol.
+Ps:Displays information about currently running processes.
+Wget:Downloads files from the web using HTTP, HTTPS, or FTP protocols.
+sudo:Executes a command with superuser (administrative) privileges.
+
+Which of the following console command creates a remote shell session?
+Ssh -i privatekey ubuntu@ip/hostname
+
+Which of the following is true when the -la parameter is specified for the ls console command?
+When you use the -la options together with the ls command, you get a detailed list of all files and directories in the current directory, including hidden ones. The output will look something like this:
+total 64
+drwxr-xr-x  3 user group  4096 Oct 20 12:00 .
+drwxr-xr-x  6 user group  4096 Oct 20 11:55 ..
+-rw-r--r--  1 user group   220 Oct 20 12:00 .bash_logout
+-rw-r--r--  1 user group  3771 Oct 20 12:00 .bashrc
+-rw-r--r--  1 user group  8079 Oct 20 12:00 .profile
+drwxr-xr-x  2 user group  4096 Oct 20 12:00 my_folder
+
+Which of the following is true for the domain name banana.fruit.bozo.click, which is the top level domain, which is a subdomain, which is a root domain?
+Top-Level Domain: .click
+Second-Level Domain: bozo
+Subdomain: fruit (third-level domain)
+Subdomain: banana (fourth-level domain)
+
+
+Is a web certificate is necessary to use HTTPS.
+Yes, a web certificate (specifically an SSL/TLS certificate) is necessary to use HTTPS (Hypertext Transfer Protocol Secure) for a website. Here’s why:
+What is HTTPS?
+HTTPS is the secure version of HTTP. It uses encryption to protect the data exchanged between a user's browser and the web server, ensuring privacy and data integrity.
+Can a DNS A record can point to an IP address or another A record.
+A Record Points To:
+IP Address: An A record specifically points to an IPv4 address. For example:
+css
+Copy code
+example.com.  IN  A  192.0.2.1
+In this case, example.com resolves to the IPv4 address 192.0.2.1.
+A Record Cannot Point To:
+Another A Record: An A record cannot point to another A record. It directly maps a domain name to a specific IP address, not to another record.
+Other Types of Records: An A record cannot point to other types of DNS records like CNAME (Canonical Name), MX (Mail Exchange), or TXT (Text) records.
+
+Port 443, 80, 22 is reserved for which protocol?
+Port 80: HTTP (unencrypted web traffic)
+Port 443: HTTPS (encrypted web traffic)
+Port 22: SSH (secure shell for remote access)
+
+What will the following code using Promises output when executed?
+A Promise in JavaScript represents an operation that hasn't completed yet but is expected to in the future. A Promise can be in one of three states:
+Pending: The initial state, neither fulfilled nor rejected.
+Fulfilled: The operation completed successfully.
+Rejected: The operation failed.
+Example Code
+Here's a basic example of a Promise and what it outputs:
+javascript
+Copy code
+const myPromise = new Promise((resolve, reject) => {
+    const success = true; // Change to false to see the reject behavior
+    if (success) {
+        resolve("Operation was successful!");
+    } else {
+        reject("Operation failed.");
+    }
+});
+
+myPromise
+    .then((message) => {
+        console.log(message); // This will execute if the promise is fulfilled
+    })
+    .catch((error) => {
+        console.log(error); // This will execute if the promise is rejected
+    });
+
+Possible Outputs
+If success is true:
+Output: Operation was successful!
+If success is false:
+Output: Operation failed.
+
