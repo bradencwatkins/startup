@@ -1,4 +1,4 @@
-# startup
+# Startup
 Welcome to my startup. I will soon be a billionaire i swear  
 ## Notes
 [Here](https://github.com/bradencwatkins/startup/blob/main/notes.md) is a link to all of the notes I have/will take regarding this project.  
@@ -41,5 +41,19 @@ The website has been launched with 6 pages including:
 Home, find matches, account, advice, messaging, and about. It is only barebone HTML but its nice to start seeing at least some  
 resemblance of a website. Very cool.  
 
+## HTML deliverable  
+**HTML pages** - six pages that represent all of the functionality of the website  
+**Links** - Each page has links to each other page, and there is a link to this repository page  
+**Text** - There is text showing all information you need, like account, different mathches, prophetic advise, etc...  
+**Images** - There are a few placeholder/index page pictures to make stuff look nice  
+**Login** - There are input text and boxes for login, as well as a dedicated page  
+**Websocket** - The message page represents real time messaging  
 
-
+## CSS deliverable  
+**Design** - There is a consistent header, footer, and main body for each page  
+**Navigation** - I moved the menu to the right side, and added a static log on top left  
+**Resizing** - Added functionality to each resize scale, hope I found them all  
+**Color scheme** - Attempted to add a color theme to the whole website in order for it to look better  
+**Images** - Added a few new images to make the home screen and about screens look better  
+**Buttons** - Styled the buttons with outline and certain text to make them pop  
+**Consistency** - Made each page look similar to help ease of access
