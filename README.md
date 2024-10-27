@@ -46,8 +46,10 @@ resemblance of a website. Very cool.
 **Links** - Each page has links to each other page, and there is a link to this repository page  
 **Text** - There is text showing all information you need, like account, different mathches, prophetic advise, etc...  
 **Images** - There are a few placeholder/index page pictures to make stuff look nice  
-**Login** - There are input text and boxes for login, as well as a dedicated page  
+**Login** - There are input text and boxes for login, as well as a dedicated page with name display
 **Websocket** - The message page represents real time messaging  
+**Database** - Messages and matches show a database storage  
+
 
 ## CSS deliverable  
 **Design** - There is a consistent header, footer, and main body for each page  
@@ -56,4 +58,5 @@ resemblance of a website. Very cool.
 **Color scheme** - Attempted to add a color theme to the whole website in order for it to look better  
 **Images** - Added a few new images to make the home screen and about screens look better  
 **Buttons** - Styled the buttons with outline and certain text to make them pop  
-**Consistency** - Made each page look similar to help ease of access
+**Consistency** - Made each page look similar to help ease of access  
+**Text** - Applied consistent font and font sizing  
