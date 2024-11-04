@@ -1,0 +1,17 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "Welcome to my startup. I will soon be a billionaire i swear  \r ## Notes\r [Here](https://github.com/bradencwatkins/startup/blob/main/notes.md) is a link to all of the notes I have/will take regarding this project.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}
