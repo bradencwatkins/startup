@@ -1,11 +1,14 @@
 .body {
   display: flex;
+  font-family: "Roboto", sans-serif;
   flex-direction: column;
   min-width: 375px;
 }
 
 header {
   flex: 0 80px;
+  background-color: #9EC5E5;
+  border: 2px solid #628daf;
 }
 
 main {
@@ -23,14 +26,21 @@ footer {
 menu {
   flex: 1;
   display: flex;
-  /*  overwrite Bootstrap so the menu does not wrap */
   flex-direction: row !important;
   list-style: none;
 }
 
 .navbar-brand {
   padding-left: 0.3em;
-  border-bottom: solid rgb(182, 182, 182) thin;
+  color: black;
+  font-size: 30px;
+}
+
+.custom-navbar {
+  margin-right: 5%;
+  margin-left: 5%;
+  color: black !important;
+
 }
 
 menu .nav-item {

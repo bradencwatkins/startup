@@ -12,10 +12,11 @@ export default function App() {
     <BrowserRouter>
       <div className='body bg-dark text-light'>
         <header className='container-fluid'>
-          <nav className='navbar fixed-top navbar-dark'>
+          <nav className='navbar fixed-top navbar-dark custom-navbar'>
             <div className='navbar-brand'>
-              MarryaBook<sup>&reg;</sup>
+              MarryaBook
             </div>
+            <div className='ml-auto'>
             <menu className='navbar-nav'>
               <li className='nav-item'>
                 <NavLink className='nav-link' to=''>
@@ -38,6 +39,7 @@ export default function App() {
                 </NavLink>
               </li>
             </menu>
+            </div>
           </nav>
         </header>
   
