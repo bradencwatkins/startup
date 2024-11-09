@@ -35,6 +35,10 @@ menu {
   list-style: none;
 }
 
+.custom-text {
+  color:black;
+}
+
 .navbar-brand {
   padding-left: 0.3em;
   color: black;
