@@ -51,12 +51,10 @@ export default function App() {
             <Route path='*' element={<NotFound />} />
         </Routes>
   
-        <footer className='bg-dark text-white-50'>
-          <div className='container-fluid'>
-            <span className='text-reset'>Author Name(s)</span>
-            <a className='text-reset' href='https://github.com/webprogramming260/simon-react'>
-              Source
-            </a>
+        <footer className=''>
+          <div className='padder'>
+            <span>Braden Watkins-||- </span>
+            <a href="https://github.com/bradencwatkins/startup" target="_blank"> GitHub</a>
           </div>
         </footer>
       </div>
