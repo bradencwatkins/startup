@@ -1,8 +1,10 @@
 import React from 'react';
+import './search.css'
 
 export function Vote() {
   return (
     <main>
+      <h2 class="title">Which Is Better?</h2>
             <div class="swipey">
                 <h2>Ellen Johnson</h2>
                 <img src="ellen.jpg" width="300" height="400"></img>

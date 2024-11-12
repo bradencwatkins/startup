@@ -1,0 +1,28 @@
+
+.main2 {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.list {
+    text-align: center;
+    padding: 10px;
+}
+
+footer {
+    height: 9vh;
+    background-color: #9EC5E5;
+    border: 2px solid #628daf;
+}
+
+.bordered-box {
+    border: 2px solid #628daf;
+    padding: 5px 20px;
+    border-radius: 8px;
+    background-color: #9EC5E5;
+    display: inline-block;
+}

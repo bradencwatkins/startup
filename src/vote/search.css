@@ -3,15 +3,16 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
+    color: black;
 }
 
 .swipey {
     border: 2px solid #628daf;
     padding: 20px 25px;
     border-radius: 8px;
+    justify-content: center;
     background-color: #9EC5E5;
     display: inline-block;
     
@@ -21,4 +22,11 @@ footer {
     height: 9vh;
     background-color: #9EC5E5;
     border: 2px solid #628daf;
+}
+
+.title {
+    justify-content: flex-start;
+    margin-top: 10px;
+    color: black;
+    text-align: center;
 }
