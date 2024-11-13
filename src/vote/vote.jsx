@@ -1,21 +1,27 @@
 import React from 'react';
-import './search.css'
+import './vote.css'
 
 export function Vote() {
   return (
     <main>
       <h2 class="title">Which Is Better?</h2>
+        <div class="container">
             <div class="swipey">
-                <h2>Ellen Johnson</h2>
-                <img src="ellen.jpg" width="300" height="400"></img>
-                <p>Age: 21  Height: 5'2"</p>
-                <button type="button" class="btn btn-success">
-                    <i class="bi bi-check"></i> 
-                </button>
-                <button type="button" class="btn btn-danger">
-                    <i class="bi bi-x"></i>
-                </button>
+              <h2>Jurassic Park</h2>
+              <button class="img-button">
+                <img src="jurassic.jpg" width="300" height="400" class="imgBorder"></img>
+              </button>  
+              <button type="submit" class="btn btn-primary login butt">I Don't Know This One</button>
             </div>
-        </main>
+
+            <div class="swipey">
+              <h2>Star Wars</h2>
+              <button class="img-button">
+                <img src="star wars.webp" width="300" height="400" class="imgBorder"></img>
+              </button> 
+              <button type="submit" class="btn btn-primary login butt">I Don't Know This One</button>
+            </div>
+        </div>
+    </main>
   );
 }

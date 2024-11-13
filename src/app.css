@@ -69,6 +69,16 @@ menu {
   color: black;
 }
 
+.navbar-brand{
+  border-color: black !important;
+  color: white !important;
+  text-shadow: 
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black !important;
+}
+
 menu .nav-item {
   padding: 0 0.3em;
   color: black;
