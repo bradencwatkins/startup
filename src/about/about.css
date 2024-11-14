@@ -12,6 +12,14 @@ main {
     padding-top: 10px;
 }
 
+.bold-text {
+    font-weight: bold;
+}
+
+.imgBorder{
+    border: 2px solid #628daf;
+}
+
 .bordered-box {
     border: 2px solid #628daf;
     padding: 5px 20px;
