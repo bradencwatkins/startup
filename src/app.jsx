@@ -10,7 +10,7 @@ import { About } from './about/about';
 export default function App() {
     return (
     <BrowserRouter>
-      <div className='body bg-dark text-light'>
+      <div className='body text-light'>
         <header className='container-fluid'>
           <nav className='navbar fixed-top navbar-dark custom-navbar'>
             <div className='navbar-brand'>

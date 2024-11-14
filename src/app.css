@@ -3,16 +3,21 @@
   font-family: "Roboto", sans-serif;
   flex-direction: column;
   min-width: 375px;
+  min-height: 100vh;
 }
 
 header {
-  flex: 0 80px;
+  height: 80px;
   background-color: #9EC5E5;
+  position: fixed;
+  width: 100%;
   border: 2px solid #628daf;
 }
 
 main {
-  flex: 1 calc(100vh - 110px);
+  flex: 1;
+  margin-top: 80px;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,11 +27,15 @@ main {
 }
 
 footer {
-  flex: 0 30px;
+  padding: 5px;
   background-color: #9EC5E5;
   border: 2px solid #628daf;
   display: flex;
   color: black;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  max-height: 30px;
 }
 
 menu {
