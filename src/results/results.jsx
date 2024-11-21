@@ -1,7 +1,9 @@
 import React from 'react';
 import "./results.css";
 
-export function Results() {
+export function Results({ options }) {
+  const totalVotes = options.reduce((total, option) => total + options.votes, 0);
+  
   return (
     <main className='container-fluid text-center'>
       <table>

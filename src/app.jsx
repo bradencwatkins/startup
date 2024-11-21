@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
@@ -7,7 +7,23 @@ import { Vote } from './vote/vote';
 import { Results } from './results/results';
 import { About } from './about/about';
 
+
+
 export default function App() {
+
+  const [options, setOptions] = useState([
+    { id: 1, name: 'Jurassic Park', votes: 0 },
+    { id: 2, name: 'Star Wars', votes: 0 },
+  ])
+
+  const handleVote = (id) => {
+    setOptions(prevOptions =>
+      prevOptions.map(option =>
+        option.id == id ? { ...option, votes: option.votes + 1 } : option
+      )
+    );
+  };
+
     return (
     <BrowserRouter>
       <div className='body text-light'>
