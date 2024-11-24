@@ -7,22 +7,32 @@ import { Vote } from './vote/vote';
 import { Results } from './results/results';
 import { About } from './about/about';
 
-
+const allOptions = [
+  { id: 1, name: 'Jurassic Park', votes: 0 },
+  { id: 2, name: 'Star Wars', votes: 0 },
+  { id: 3, name: 'Harry Potter', votes: 0 },
+  { id: 4, name: 'Jaws', votes: 0 },
+];
 
 export default function App() {
 
-  const [options, setOptions] = useState([
-    { id: 1, name: 'Jurassic Park', votes: 0 },
-    { id: 2, name: 'Star Wars', votes: 0 },
-  ])
+  const [options, setOptions] = useState(getRandomOptions());
+  const [results, setResults] = useState(allOptions.map(option => ({ ...option })))
+  
+  function getRandomOptions() {
+    const shuffled = [...allOptions].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 2);
+  }
 
   const handleVote = (id) => {
-    setOptions(prevOptions =>
-      prevOptions.map(option =>
-        option.id == id ? { ...option, votes: option.votes + 1 } : option
-      )
+    const updatedResults = results.map(option =>
+      option.id == id ? { ...option, votes: option.votes + 1 } : option
     );
+    setResults(updatedResults);
+    setOptions(getRandomOptions());
+    
   };
+
 
     return (
     <BrowserRouter>
@@ -61,8 +71,8 @@ export default function App() {
   
         <Routes>
             <Route path='/' element={<Login />} exact />
-            <Route path='/vote' element={<Vote />} />
-            <Route path='/results' element={<Results />} />
+            <Route path='/vote' element={<Vote options={options} onVote={handleVote}/>} />
+            <Route path='/results' element={<Results options={options} />} />
             <Route path='/about' element={<About />} />
             <Route path='*' element={<NotFound />} />
         </Routes>

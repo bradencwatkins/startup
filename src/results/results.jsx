@@ -2,7 +2,7 @@ import React from 'react';
 import "./results.css";
 
 export function Results({ options }) {
-  const totalVotes = options.reduce((total, option) => total + options.votes, 0);
+  const totalVotes = options.reduce((total, option) => total + option.votes, 0);
   
   return (
     <main className='container-fluid text-center'>
@@ -15,16 +15,16 @@ export function Results({ options }) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Jaws</td>
-            <td>45%</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Spongebob</td>
-            <td>23%</td>
-          </tr>
+          {options.map((option, index) => {
+            const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+            return (
+              <tr key={option.id}>
+                <td>{index + 1}</td>
+                <td>{option.name}</td>
+                <td>{percentage.toFixed(2)}%</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </main>

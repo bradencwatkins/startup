@@ -7,16 +7,16 @@ export function Login() {
       <div>
         <h1 className="custom-text">Login to MarryaBook</h1>
         <form method="get" action="play.html">
-          <div class="input-group mb-3">
-            <span class="input-group-text">Email</span>
-            <input class="form-control" type="text" placeholder="your@email.com" />
+          <div className="input-group mb-3">
+            <span className="input-group-text">Email</span>
+            <input className="form-control" type="text" placeholder="your@email.com" />
           </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text">Password</span>
-            <input class="form-control" type="password" placeholder="password" />
+          <div className="input-group mb-3">
+            <span className="input-group-text">Password</span>
+            <input className="form-control" type="password" placeholder="password" />
           </div>
-          <button type="submit" class="btn btn-primary login">Login</button>
-          <button type="submit" class="btn btn-primary login">Create</button>
+          <button type="submit" className="btn btn-primary login">Login</button>
+          <button type="submit" className="btn btn-primary login">Create</button>
         </form>
       </div>
     </main>
