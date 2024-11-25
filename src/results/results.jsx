@@ -11,6 +11,7 @@ export function Results({ options }) {
           <tr>
             <th>Rank</th>
             <th>Movie</th>
+            <th>Votes</th>
             <th>Percentage Chosen</th>
           </tr>
         </thead>
@@ -21,6 +22,7 @@ export function Results({ options }) {
               <tr key={option.id}>
                 <td>{index + 1}</td>
                 <td>{option.name}</td>
+                <td>{option.votes}</td>
                 <td>{percentage.toFixed(2)}%</td>
               </tr>
             );

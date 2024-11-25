@@ -28,6 +28,9 @@ export default function App() {
     const updatedResults = results.map(option =>
       option.id == id ? { ...option, votes: option.votes + 1 } : option
     );
+
+    console.log('voting numbers: ', updatedResults);
+
     setResults(updatedResults);
     setOptions(getRandomOptions());
     
