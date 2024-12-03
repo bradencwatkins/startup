@@ -2,6 +2,8 @@ import React from 'react';
 import "./results.css";
 
 export function Results({ options }) {
+  const sortedOptions = [...options].sort((a, b) => b.votes - a.votes);
+
   const totalVotes = options.reduce((total, option) => total + option.votes, 0);
   
   return (
@@ -16,7 +18,7 @@ export function Results({ options }) {
           </tr>
         </thead>
         <tbody>
-          {options.map((option, index) => {
+          {sortedOptions.map((option, index) => {
             const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
             return (
               <tr key={option.id}>

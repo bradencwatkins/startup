@@ -75,7 +75,7 @@ export default function App() {
         <Routes>
             <Route path='/' element={<Login />} exact />
             <Route path='/vote' element={<Vote options={options} onVote={handleVote}/>} />
-            <Route path='/results' element={<Results options={options} />} />
+            <Route path='/results' element={<Results options={results} />} />
             <Route path='/about' element={<About />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
