@@ -14,7 +14,7 @@ export function Authenticated(props) {
 
   return (
     <div>
-        <h1>Welcome to MarryaBook</h1>
+    <h1>Welcome to MarryaBook</h1>
       <div className='playerName'>{props.userName}</div>
       <Button className="btn btn-primary login" variant='primary' onClick={() => navigate('/vote')}>
         Vote

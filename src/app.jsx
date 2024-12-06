@@ -19,8 +19,6 @@ const allOptions = [
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  //const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
-  //const [authState, setAuthState] = React.useState(currentAuthState);
   const [options, setOptions] = useState(getRandomOptions());
   const [results, setResults] = useState(allOptions.map(option => ({ ...option })))
 
@@ -98,7 +96,6 @@ export function App() {
             }
             exact
           />
-          <Route path='/' element={<Login />} exact />
           <Route path='/vote' element={<Vote options={options} onVote={handleVote}/>} />
           <Route path='/results' element={<Results options={results} />} />
           <Route path='/about' element={<About />} />

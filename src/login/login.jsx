@@ -11,14 +11,12 @@ export function Login({ userName, authState, onAuthChange }) {
       <div>
         {authState !== AuthState.Unknown}
         {authState === AuthState.Authenticated && (
-          <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+          <Authenticated userName={userName} onLogout={() => onAuthChange('')} />
         )}
         {authState === AuthState.Unauthenticated && (
           <Unauthenticated
             userName={userName}
-            onLogin={(loginUserName) => {
-              onAuthChange(loginUserName, AuthState.Authenticated);
-            }}
+            onLogin={(loginUserName) => onAuthChange(loginUserName)}
           />
         )}
       </div>
