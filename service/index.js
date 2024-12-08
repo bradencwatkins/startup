@@ -60,38 +60,28 @@ apiRouter.get('/vote', (_req, res) => {
     res.send(randomizedMovies);
 });
 
+function getRandomMovies() {
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 2);
+  }
+
 //this on esubmits a vote for a movie or book on the vote page
 apiRouter.post('/vote', (req, res) => {
-    const { token, movieId } = req.body;
-    
-    const user = Object.values(users).find(u => u.token === token);
-    if (!user) return res.status(401).send({ msg: 'Unauthorized' });
-  
-    if (votes[user.email]) {
-      return res.status(400).send({ msg: 'You have already voted.' });
-    }
-  
-    const movie = options.find(o => o.id === movieId);
+    const movieId = req.body.id;
+    const movie = movies.find(m => m.id === movieId);
     if (movie) {
       movie.votes += 1;
-      votes[user.email] = movieId; // Mark this user as having voted
-      return res.send({ msg: 'Vote submitted successfully', options });
+      const updatedMovies = getRandomMovies(); // Refresh movies after each vote
+      res.send({ movie: movie, updatedMovies });
+    } else {
+      res.status(404).send({ msg: 'Movie not found' });
     }
-  
-    return res.status(400).send({ msg: 'Invalid movie ID' });
 });
 
 //this one gets voting results from the results page
 apiRouter.get('/results', (_req, res) => {
-    const sortedOptions = [...options].sort((a, b) => b.votes - a.votes);
-    const totalVotes = options.reduce((total, option) => total + option.votes, 0);
-    
-    const results = sortedOptions.map(option => ({
-      ...option,
-      percentage: totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0,
-    }));
-  
-    res.send(results);
+    const sortedMovies = [...movies].sort((a, b) => b.votes - a.votes);
+    res.send(sortedMovies);
 });
 
 app.use((_req, res) => {
@@ -100,4 +90,4 @@ app.use((_req, res) => {
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-  });
+});
