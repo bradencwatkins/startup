@@ -9,6 +9,7 @@ import { About } from './about/about';
 import AuthState from './login/authState';
 import { ErrorBoundary } from "react-error-boundary"
 
+
 const allOptions = [
   { id: 1, name: 'Jurassic Park', votes: 0 },
   { id: 2, name: 'Star Wars', votes: 0 },
@@ -20,25 +21,55 @@ export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const [options, setOptions] = useState(getRandomOptions());
-  const [results, setResults] = useState(allOptions.map(option => ({ ...option })))
+  const [results, setResults] = useState(allOptions.map(option => ({ ...option })));
+  const [authState, setAuthState] = useState(userName ? 'Authenticated' : 'Unauthenticated');
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
-  const authState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  useEffect(() => {
+    if (token) {
+      fetchResults();
+    }
+  }, [token]);
+
+  const fetchResults = async () => {
+    try {
+      const res = await fetch('/api/results');
+      const data = await res.json();
+      setResults(data);
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  };
   
   function getRandomOptions() {
     const shuffled = [...allOptions].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 2);
   }
 
-  const handleVote = (id) => {
-    const updatedResults = results.map(option =>
-      option.id == id ? { ...option, votes: option.votes + 1 } : option
-    );
+  const handleVote = async (movieId) => {
+    if (!token) {
+      alert('You must be logged in to vote');
+      return;
+    }
 
-    console.log('voting numbers: ', updatedResults);
+    try {
+      const res = await fetch('/api/vote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, movieId }),
+      });
 
-    setResults(updatedResults);
-    setOptions(getRandomOptions());
-    
+      const data = await res.json();
+      if (res.ok) {
+        setOptions(data.options); // Update options with new votes
+      } else {
+        alert(data.msg);
+      }
+    } catch (error) {
+      console.error('Error submitting vote:', error);
+    }
   };
 
 

@@ -9,6 +9,9 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
 
 let users = {};
 let votes = [];
@@ -19,77 +22,82 @@ let results = [
     { id: 4, name: 'Jaws', votes: 0 },
 ];
 
-
-//this one saves users into the database
-app.post('/api/register', (req, res) => {
-    const { email, password } = req.body;
-  
-    if (!email || !password) {
-      return res.status(400).send({ message: 'Email and password are required' });
+//this one creates a new user
+apiRouter.post('/auth/create', async (req, res) => {
+    const user = users[req.body.email];
+    if (user) {
+      res.status(409).send({ msg: 'Existing user' });
+    } else {
+      const user = { email: req.body.email, password: req.body.password, token: uuid.v4() };
+      users[user.email] = user;
+      res.send({ token: user.token });
     }
-  
-    if (users[email]) {
-      return res.status(409).send({ message: 'User already exists' });
-    }
-  
-    const token = uuid.v4();
-    users[email] = { email, password, token };
-  
-    res.status(201).send({ email, token });
   });
 
-//this one logs in the user
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).send({ message: 'Email and password are required' });
+//this one logs in an existing user
+apiRouter.post('/auth/login', async (req, res) => {
+    const user = users[req.body.email];
+    if (user && req.body.password === user.password) {
+      user.token = uuid.v4();
+      res.send({ token: user.token });
+    } else {
+      res.status(401).send({ msg: 'Unauthorized' });
     }
+  });
 
-    const user = users[email];
-
-    if (!user || user.password !== password) {
-        return res.status(401).send({ message: 'Invalid email or password' });
+//this one logs out an existing user
+apiRouter.delete('/auth/logout', (req, res) => {
+    const user = Object.values(users).find((u) => u.token === req.body.token);
+    if (user) {
+      delete user.token;
     }
+    res.status(204).end();
+  });
 
-    res.status(200).send({ email, token: user.token });
+//this one gets a random option when someone clicks one
+apiRouter.get('/vote', (_req, res) => {
+    const randomizedMovies = getRandomMovies();
+    res.send(randomizedMovies);
 });
 
-//this one submits votes >:)
-app.post('/api/vote', (req, res) => {
-    const { email, movieId } = req.body;
+//this on esubmits a vote for a movie or book on the vote page
+apiRouter.post('/vote', (req, res) => {
+    const { token, movieId } = req.body;
+    
+    const user = Object.values(users).find(u => u.token === token);
+    if (!user) return res.status(401).send({ msg: 'Unauthorized' });
   
-    if (!email || !movieId) {
-      return res.status(400).send({ message: 'Email and movie ID are required' });
+    if (votes[user.email]) {
+      return res.status(400).send({ msg: 'You have already voted.' });
     }
   
-    if (!users[email]) {
-      return res.status(401).send({ message: 'User not authenticated' });
-    }
-  
-    const movie = results.find((movie) => movie.id === movieId);
+    const movie = options.find(o => o.id === movieId);
     if (movie) {
       movie.votes += 1;
-      return res.status(200).send({ message: 'Vote recorded successfully' });
+      votes[user.email] = movieId; // Mark this user as having voted
+      return res.send({ msg: 'Vote submitted successfully', options });
     }
   
-    return res.status(404).send({ message: 'Movie not found' });
-  });
-
-//this one gets the vote results from the result page
-app.get('/api/results', (req, res) => {
-    const sortedResults = [...results].sort((a, b) => b.votes - a.votes);
-    const totalVotes = results.reduce((total, movie) => total + movie.votes, 0);
-
-    const resultsWithPercentage = sortedResults.map((movie) => {
-        const percentage = totalVotes > 0 ? (movie.votes / totalVotes) * 100 : 0;
-        return { ...movie, percentage: percentage.toFixed(2) };
-    });
-
-    res.status(200).json(resultsWithPercentage);
+    return res.status(400).send({ msg: 'Invalid movie ID' });
 });
 
-//this one starts the server
+//this one gets voting results from the results page
+apiRouter.get('/results', (_req, res) => {
+    const sortedOptions = [...options].sort((a, b) => b.votes - a.votes);
+    const totalVotes = options.reduce((total, option) => total + option.votes, 0);
+    
+    const results = sortedOptions.map(option => ({
+      ...option,
+      percentage: totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0,
+    }));
+  
+    res.send(results);
+});
+
+app.use((_req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+});
+
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-});
+    console.log(`Server running on port ${port}`);
+  });
