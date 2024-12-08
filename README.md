@@ -61,39 +61,13 @@ resemblance of a website. Very cool.
 **Consistency** - Made each page look similar to help ease of access  
 **Text** - Applied consistent font and font sizing  
 
-## REACT
-Project Rubric for MarryaBook Voting App
-Components:
+## REACT deliverable  
+**Vite** - Bundled and Compiled with Vite  
+**Components** - all components mock functionality, including:  
+**Login** - Login stores authenticates the user, and brings user to the vote page  
+**Database** - Local storage stores votes and percentages, will be replaced later  
+**WebSocket** - Currently local storage updates votes when user presses on them, will be replaced by websocket later  
+**Application Logic** - Updates votes dynamically based on when the user votes on the results page  
+**Router** - Routes between different pages  
+**Hooks** - Hooks are used to manage authentication state, voter options, and results.  
 
-Login Component: Handles user authentication and navigation. Upon successful login, users are redirected to the voting page.
-Voting List Component: Displays a list of movie options that users can vote on.
-Vote Component: Lets the user cast their vote and shows real-time updates of the voting count.
-Mocked Data: Currently, login, vote submission, and voting count retrieval are mocked. This is set to be replaced with real database interactions and WebSocket integration later.
-Login:
-
-The login system authenticates the user. Once logged in, users are automatically redirected to the voting page, either by pressing Enter or clicking the login button.
-The user credentials are stored temporarily in localStorage for simplicity, but this will be moved to a more secure database in the future.
-Database (Temporary Solution):
-
-The voting counts are currently stored and retrieved from localStorage. The system will be updated to use a real database to persist vote data and allow for secure, scalable storage.
-WebSocket:
-
-Currently, a mock setInterval function simulates periodic updates to the voting counts, mimicking WebSocket behavior. This mock function randomly increases the vote count for a selected option.
-In the future, this will be replaced by a WebSocket connection, allowing the system to receive real-time updates from the server whenever votes are cast or modified.
-Application Logic:
-
-The ranking of movie options is dynamically updated based on user votes. After each vote, the system reorders the list to reflect the updated vote counts.
-The highlight (e.g., the most voted option) and ranking numbers change based on the user's selections and the vote count updates.
-Router:
-
-The app uses React Router to enable smooth navigation between the login page and the voting page.
-The routing system ensures that only authenticated users can access the voting page, while unauthenticated users are redirected to the login page.
-Hooks:
-
-React's useState hook is used to manage state throughout the app, such as tracking the user's authentication state, voting options, and the results of votes.
-Unlike Vue, which uses class properties, React uses functional components with hooks to manage the component's state, providing a more declarative approach to state changes.
-Future Enhancements:
-
-Database Integration: Transition from localStorage to a proper database system (such as Firebase, MongoDB, or SQL) to store user data and vote counts securely.
-WebSocket Integration: Replace the mock setInterval function with actual WebSocket messages to ensure real-time updates of votes and rankings.
-Authentication System: Improve the login system by integrating with a backend service for secure authentication (using JWT tokens, OAuth, etc.).
