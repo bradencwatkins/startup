@@ -10,34 +10,38 @@ import AuthState from './login/authState';
 import { ErrorBoundary } from "react-error-boundary"
 
 
-const allOptions = [
-  { id: 1, name: 'Jurassic Park', votes: 0 },
-  { id: 2, name: 'Star Wars', votes: 0 },
-  { id: 3, name: 'Harry Potter', votes: 0 },
-  { id: 4, name: 'Jaws', votes: 0 },
-];
-
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const [options, setOptions] = useState(getRandomOptions());
   const [results, setResults] = useState(allOptions.map(option => ({ ...option })));
   const [authState, setAuthState] = useState(userName ? 'Authenticated' : 'Unauthenticated');
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem('token'|| ''));
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (token) {
-      fetchResults();
+      fetchRandomMovies();
     }
   }, [token]);
+
+  const fetchRandomMovies = async () => {
+    try {
+      const res = await fetch('/api/vote');
+      const data = await res.json();
+      setOptions(data);
+    } catch (error) {
+      console.error('Error fetching random movies:', error);
+    }
+  };
 
   const fetchResults = async () => {
     try {
       const res = await fetch('/api/results');
       const data = await res.json();
-      setResults(data);
+      setResults(data); // Set the results
     } catch (error) {
-      console.error("Error fetching results:", error);
+      console.error('Error fetching results:', error);
     }
   };
   
@@ -58,12 +62,12 @@ export function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token, movieId }),
+        body: JSON.stringify({ id: movieId }),
       });
 
       const data = await res.json();
       if (res.ok) {
-        setOptions(data.options); // Update options with new votes
+        setOptions(data.updatedMovies); // Update movies after voting
       } else {
         alert(data.msg);
       }
@@ -72,10 +76,46 @@ export function App() {
     }
   };
 
+  const handleLogin = async (email, password) => {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setToken(data.token);
+      localStorage.setItem('token', data.token);
+      setUserName(email);
+      setAuthState('Authenticated');
+      setMessage('Logged in successfully');
+    } else {
+      const data = await res.json();
+      setMessage(data.msg || 'Error logging in');
+    }
+  };
+
+  const handleSignUp = async (email, password) => {
+    const res = await fetch('/api/auth/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      setUserName('');
+      setToken('');
+      localStorage.removeItem('token');
+      setAuthState('Unauthenticated');
+      setMessage('Logged out successfully');
+    }
+  };
+
 
     return (
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
-    <BrowserRouter>
+      <BrowserRouter>
       <div className='body text-light'>
         <header className='container-fluid'>
           <nav className='navbar fixed-top navbar-dark custom-navbar'>
@@ -118,11 +158,11 @@ export function App() {
             path='/'
             element={
               <Login
-                userName={userName}
+                onLogin={handleLogin}
                 authState={authState}
-                onAuthChange={(newUserName) => {
-                  setUserName(newUserName);
-                }}
+                onSignUp={handleSignUp}
+                onAuthChange={(newUserName) => setUserName(newUserName)}
+                message={message}
               />
             }
             exact
