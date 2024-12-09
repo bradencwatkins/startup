@@ -1,17 +1,25 @@
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(express.static('public'));
-
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
 const cors = require('cors');
-
+app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
+
+// import { defineConfig } from 'vite';
+
+// export default defineConfig({
+//   server: {
+//     proxy: {
+//       '/api': 'http://localhost:4000',
+//     },
+//   },
+// });
 
 let users = {};
 let movies = [
