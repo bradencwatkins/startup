@@ -15,7 +15,7 @@ export function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const [options, setOptions] = useState([]);
   const [results, setResults] = useState([]);
-  const [authState, setAuthState] = useState(userName ? 'Authenticated' : 'Unauthenticated');
+  const [authState, setAuthState] = useState(localStorage.getItem('token') ? 'Authenticated' : 'Unauthenticated');
   const [token, setToken] = useState(localStorage.getItem('token'|| ''));
   const [message, setMessage] = useState('');
 

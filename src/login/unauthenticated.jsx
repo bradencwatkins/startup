@@ -8,34 +8,33 @@ export function Unauthenticated(props) {
   const [password, setPassword] = React.useState('');
   const [displayError, setDisplayError] = React.useState(null);
 
-  async function loginUser() {
-    if (!userName || !password) {
-        setDisplayError('Please enter both a username and password.');
-        return;
-    }
+  async function loginOrCreate(endpoint) {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify({ email: userName, password: password }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    });
 
-    try{
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
-    } catch (error) {
-        setDisplayError('An error occurred during login.');
+    if (response?.status === 200) {
+      const body = await response.json();
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('userName', userName);
+      props.onLogin(userName);
+    } else {
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
     }
   }
 
+  async function loginUser() {
+    loginOrCreate('/api/auth/login');
+  }
+
   async function createUser() {
-    if (!userName || !password) {
-        setDisplayError('Please enter both a username and password.');
-        return;
-    }
-  
-      
-    try {
-        localStorage.setItem('userName', userName);  // Save username in localStorage
-        props.onLogin(userName);  // Call onLogin with the username
-    } catch (error) {
-        setDisplayError('An error occurred during user creation.');
-    }
-    }
+    loginOrCreate('/api/auth/create');
+  }
 
     return (
     
