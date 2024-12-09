@@ -13,8 +13,8 @@ import { ErrorBoundary } from "react-error-boundary"
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const [options, setOptions] = useState(getRandomOptions());
-  const [results, setResults] = useState(allOptions.map(option => ({ ...option })));
+  const [options, setOptions] = useState([]);
+  const [results, setResults] = useState([]);
   const [authState, setAuthState] = useState(userName ? 'Authenticated' : 'Unauthenticated');
   const [token, setToken] = useState(localStorage.getItem('token'|| ''));
   const [message, setMessage] = useState('');
@@ -44,11 +44,6 @@ export function App() {
       console.error('Error fetching results:', error);
     }
   };
-  
-  function getRandomOptions() {
-    const shuffled = [...allOptions].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 2);
-  }
 
   const handleVote = async (movieId) => {
     if (!token) {
