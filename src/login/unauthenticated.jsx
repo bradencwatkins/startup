@@ -9,22 +9,26 @@ export function Unauthenticated(props) {
   const [displayError, setDisplayError] = React.useState(null);
 
   async function loginOrCreate(endpoint) {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      body: JSON.stringify({ email: userName, password: password }),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    });
-
-    if (response?.status === 200) {
-      const body = await response.json();
-      localStorage.setItem('token', body.token);
-      localStorage.setItem('userName', userName);
-      props.onLogin(userName);
-    } else {
-      const body = await response.json();
-      setDisplayError(`⚠ Error: ${body.msg}`);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify({ email: userName, password: password }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      });
+  
+      if (response.ok) {
+        const body = await response.json();
+        localStorage.setItem('token', body.token);
+        localStorage.setItem('userName', userName);
+        props.onLogin(userName);
+      } else {
+        const errorBody = await response.text();
+        setDisplayError(`⚠ Error: ${errorBody || 'Unknown error occurred'}`);
+      }
+    } catch (error) {
+      setDisplayError(`⚠ Error: ${error.message || 'Unknown error occurred'}`);
     }
   }
 
