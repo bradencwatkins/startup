@@ -40,7 +40,6 @@ export function Unauthenticated(props) {
     
       <main className="container-fluid text-center">
         <div>
-  
           <h1 className="custom-text">Login to MarryaBook</h1>
           <form method="get" action="play.html">
             <div className="input-group mb-3">

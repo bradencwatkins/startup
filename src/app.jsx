@@ -13,11 +13,11 @@ import { ErrorBoundary } from "react-error-boundary"
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const [options, setOptions] = useState([]);
-  const [results, setResults] = useState([]);
-  const [authState, setAuthState] = useState(localStorage.getItem('token') ? 'Authenticated' : 'Unauthenticated');
+  const [authState, setAuthState] = useState(localStorage.getItem('token') ? AuthState.Authenticated : AuthState.Unauthenticated);
   const [token, setToken] = useState(localStorage.getItem('token'|| ''));
   const [message, setMessage] = useState('');
+  const [options, setOptions] = useState([]);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     if (token) {
@@ -83,7 +83,7 @@ export function App() {
       setToken(data.token);
       localStorage.setItem('token', data.token);
       setUserName(email);
-      setAuthState('Authenticated');
+      setAuthState(AuthState.Authenticated);
       setMessage('Logged in successfully');
     } else {
       const data = await res.json();
@@ -102,9 +102,17 @@ export function App() {
       setUserName('');
       setToken('');
       localStorage.removeItem('token');
-      setAuthState('Unauthenticated');
+      setAuthState(AuthState.Unauthenticated);
       setMessage('Logged out successfully');
     }
+  };
+
+  const handleLogout = () => {
+    setUserName('');
+    setToken('');
+    localStorage.removeItem('token');
+    setAuthState(AuthState.Unauthenticated);
+    setMessage('Logged out successfully');
   };
 
 
@@ -153,10 +161,12 @@ export function App() {
             path='/'
             element={
               <Login
-                onLogin={handleLogin}
+                userNmae={userName}
                 authState={authState}
-                onSignUp={handleSignUp}
-                onAuthChange={(newUserName) => setUserName(newUserName)}
+                onAuthChange={(newUserName) => {
+                   setUserName(newUserName);
+                   setAuthState(AuthState.Authenticated);
+                }}
                 message={message}
               />
             }

@@ -14,8 +14,7 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 let users = {};
-let votes = [];
-let results = [
+let movies = [
     { id: 1, name: 'Jurassic Park', votes: 0 },
     { id: 2, name: 'Star Wars', votes: 0 },
     { id: 3, name: 'Harry Potter', votes: 0 },
@@ -70,13 +69,13 @@ apiRouter.post('/vote', (req, res) => {
     const movieId = req.body.id;
     const movie = movies.find(m => m.id === movieId);
     if (movie) {
-      movie.votes += 1;
-      const updatedMovies = getRandomMovies(); // Refresh movies after each vote
-      res.send({ movie: movie, updatedMovies });
+      movie.votes += 1; 
+      const updatedMovies = getRandomMovies();
+      res.send({ updatedMovies });
     } else {
       res.status(404).send({ msg: 'Movie not found' });
     }
-});
+  });
 
 //this one gets voting results from the results page
 apiRouter.get('/results', (_req, res) => {
