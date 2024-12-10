@@ -43,6 +43,7 @@ export function App() {
     try {
       const res = await fetch('/api/vote');
       const data = await res.json();
+      console.log('Movies Data:', data);  // Check if 'appearances' is in the data
       setOptions(data);
     } catch (error) {
       console.error('Error fetching random movies:', error);
@@ -53,6 +54,7 @@ export function App() {
     try {
       const res = await fetch('/api/results');
       const data = await res.json();
+      console.log('Results Data:', data);
       setResults(data);
     } catch (error) {
       console.error('Error fetching results:', error);

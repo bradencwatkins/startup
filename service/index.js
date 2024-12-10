@@ -65,9 +65,12 @@ apiRouter.delete('/auth/logout', (req, res) => {
 
 //this one gets a random option when someone clicks one
 apiRouter.get('/vote', (_req, res) => {
-    const randomizedMovies = getRandomMovies();
 
-    console.log('Randomized Movies:', randomizedMovies);
+    const randomizedMovies = getRandomMovies();
+    randomizedMovies.forEach(movie => {
+        movie.appearances += 1;
+    });
+
     res.send(randomizedMovies); 
 });
 
@@ -80,20 +83,21 @@ function getRandomMovies() {
 //this on esubmits a vote for a movie or book on the vote page
 apiRouter.post('/vote', (req, res) => {
     const { id } = req.body;
-
     const movie = movies.find(movie => movie.id === id);
   
     if (movie) {
       movie.votes += 1;
-      movie.appearances += 1;
+      console.log(`Movie "${movie.name}" updated: votes = ${movie.votes}, appearances = ${movie.appearances}`);
 
-      res.json({
-        updatedMovies: movies,
+      const updatedMovies = getRandomMovies();
+      updatedMovies.forEach(movie => {
+        movie.appearances += 1;
       });
+      res.json({ updatedMovies });
     } else {
       res.status(404).json({ msg: 'Movie not found' });
     }
-});
+  });
 
 //This one resets all votes and appearances
 apiRouter.post('/reset', (_req, res) => {
