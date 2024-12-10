@@ -13,15 +13,6 @@ app.use(express.static(path.join(__dirname, '../')));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// import { defineConfig } from 'vite';
-
-// export default defineConfig({
-//   server: {
-//     proxy: {
-//       '/api': 'http://localhost:4000',
-//     },
-//   },
-// });
 
 let users = {};
 let movies = [
@@ -119,9 +110,9 @@ apiRouter.get('/results', (_req, res) => {
 apiRouter.delete('/auth/logout', (req, res) => {
     const user = Object.values(users).find((u) => u.token === req.body.token);
     if (user) {
-      delete user.token; // Remove the token to log out the user
+      delete user.token;
     }
-    res.status(204).end(); // No content response for successful logout
+    res.status(204).end(); 
 });
 
 app.use((_req, res) => {
