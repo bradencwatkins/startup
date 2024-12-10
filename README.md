@@ -71,3 +71,10 @@ resemblance of a website. Very cool.
 **Router** - Routes between different pages  
 **Hooks** - Hooks are used to manage authentication state, voter options, and results.  
 
+## SERVICE deliverable  
+**HTTP Node.js & Express** - includes express server and node.js  
+**Frontend Express static Middleware** - included  
+**Frontend calls third party service** - Dad joke APIs, dont judge the jokes  
+**Backend service endpoints** - many examples of POST ans GET service endpoints  
+**Frontend service endpoints** - functions call GET and POST from backend using fetch  
+
