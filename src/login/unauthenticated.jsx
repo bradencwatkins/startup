@@ -33,11 +33,11 @@ export function Unauthenticated(props) {
   }
 
   async function loginUser() {
-    loginOrCreate('/api/auth/login');
+    props.onLogin(userName, password);
   }
 
   async function createUser() {
-    loginOrCreate('/api/auth/create');
+    props.onSignUp(userName, password);
   }
 
     return (

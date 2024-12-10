@@ -3,8 +3,7 @@ import "./results.css";
 
 export function Results({ options }) {
   const sortedOptions = [...options].sort((a, b) => b.votes - a.votes);
-
-  const totalVotes = options.reduce((total, option) => total + option.votes, 0);
+  console.log(options);
   
   return (
     <main className='container-fluid text-center'>
@@ -19,7 +18,7 @@ export function Results({ options }) {
         </thead>
         <tbody>
           {sortedOptions.map((option, index) => {
-            const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+            const percentage = option.appearances > 0 ? (option.votes / option.appearances) * 100 : 0;
             return (
               <tr key={option.id}>
                 <td>{index + 1}</td>

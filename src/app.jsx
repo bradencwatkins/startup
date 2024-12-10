@@ -8,22 +8,36 @@ import { Results } from './results/results';
 import { About } from './about/about';
 import AuthState from './login/authState';
 import { ErrorBoundary } from "react-error-boundary"
+import Authenticated from './login/authenticated';
 
 
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const [authState, setAuthState] = useState(localStorage.getItem('token') ? AuthState.Authenticated : AuthState.Unauthenticated);
   const [token, setToken] = useState(localStorage.getItem('token'|| ''));
+  const [authState, setAuthState] = useState(localStorage.getItem('token') ? AuthState.Authenticated : AuthState.Unauthenticated);
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [results, setResults] = useState([]);
 
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setToken(token);
+    setAuthState(token ? AuthState.Authenticated : AuthState.Unauthenticated);
+  }, []);
+  
   useEffect(() => {
     if (token) {
       fetchRandomMovies();
     }
   }, [token]);
+  
+  useEffect(() => {
+      if (options.length > 0) {
+        fetchResults();
+      }
+  }, [options]);
 
   const fetchRandomMovies = async () => {
     try {
@@ -39,7 +53,7 @@ export function App() {
     try {
       const res = await fetch('/api/results');
       const data = await res.json();
-      setResults(data); // Set the results
+      setResults(data);
     } catch (error) {
       console.error('Error fetching results:', error);
     }
@@ -56,13 +70,15 @@ export function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, 
         },
         body: JSON.stringify({ id: movieId }),
       });
-
+  
       const data = await res.json();
       if (res.ok) {
-        setOptions(data.updatedMovies); // Update movies after voting
+        setOptions(data.updatedMovies);
+        fetchResults();
       } else {
         alert(data.msg);
       }
@@ -77,11 +93,12 @@ export function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-
+  
     if (res.ok) {
       const data = await res.json();
-      setToken(data.token);
       localStorage.setItem('token', data.token);
+      localStorage.setItem('userName', email);
+      setToken(data.token);
       setUserName(email);
       setAuthState(AuthState.Authenticated);
       setMessage('Logged in successfully');
@@ -99,21 +116,39 @@ export function App() {
     });
 
     if (res.ok) {
-      setUserName('');
-      setToken('');
-      localStorage.removeItem('token');
-      setAuthState(AuthState.Unauthenticated);
-      setMessage('Logged out successfully');
+      const data = await res.json();
+      setToken(data.token);
+      localStorage.setItem('token', data.token);
+      setUserName(email);
+      setAuthState(AuthState.Authenticated); 
+      localStorage.setItem('userName', email);
+      setMessage('Signed up and logged in successfully');
+    } else {
+      const data = await res.json();
+      setMessage(data.msg || 'Error signing up');
     }
   };
 
+  function handleAuthChange(newUserName, newAuthState){
+    setUserName(newUserName);
+    setAuthState(newAuthState);
+  }
+
   const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     setUserName('');
     setToken('');
-    localStorage.removeItem('token');
     setAuthState(AuthState.Unauthenticated);
+    handleAuthChange('', AuthState.Unauthenticated);
     setMessage('Logged out successfully');
   };
+
+  //FOR DEBUGGING:
+  useEffect(() => {
+    console.log('Token:', token);  // Debugging token
+    console.log('AuthState:', authState);  // Debugging authState
+  }, [token, authState]);
 
 
     return (
@@ -161,18 +196,18 @@ export function App() {
             path='/'
             element={
               <Login
-                userNmae={userName}
+                userName={userName}
                 authState={authState}
-                onAuthChange={(newUserName) => {
-                   setUserName(newUserName);
-                   setAuthState(AuthState.Authenticated);
-                }}
+                onAuthChange={handleAuthChange}
+                onLogout={handleLogout}
+                onLogin={handleLogin}
+                onSignUp={handleSignUp}
                 message={message}
               />
             }
             exact
           />
-          <Route path='/vote' element={<Vote options={options} onVote={handleVote}/>} />
+          <Route path='/vote' element={<Vote options={options} onVote={handleVote} authState={authState} />} />
           <Route path='/results' element={<Results options={results} />} />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />
