@@ -1,1 +1,4 @@
 node_modules/
+service/dbConfig.json
+authTest/
+mongoTest/
