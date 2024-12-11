@@ -5,9 +5,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
-const userName = "bradencwatkins";
-const password = "Cf7Q4RemigC4Bbvz";
-const hostname = "cluster0.nlizj.mongodb.net";
+
 
 const url = `mongodb+srv://${userName}:${password}@${hostname}`;
 const client = new MongoClient(url);
