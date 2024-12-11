@@ -18,13 +18,13 @@
     "name": "Jaws",
     "image_url": "/public/jaws.jpg",
     "votes": 4,
-    "appearances": 9
+    "appearances": 10
   },
   {
     "id": 4,
     "name": "Harry Potter",
     "image_url": "/public/harry-potter.jpg",
     "votes": 5,
-    "appearances": 12
+    "appearances": 13
   }
 ]

@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
-const jwt = require('jsonwebtoken')
 const uuid = require('uuid');
 const app = express();
 const cors = require('cors');
@@ -19,6 +18,10 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 app.use(cookieParser());
 app.set('trust proxy', true);
+
+(async () => {
+  await DB.initializeMovies();
+})();
 
 const authCookieName = 'token';
 
@@ -71,12 +74,10 @@ apiRouter.post('/auth/login', async (req, res) => {
 //this one gets a random option when someone clicks one
 apiRouter.get('/vote', async (req, res) => {
   try {
-    const movies = readMovies();
-    const shuffledMovies = getRandomMovies(movies);
+    const shuffledMovies = await DB.getRandomMovies(); // Fetch random movies from DB
     for (const movie of shuffledMovies) {
-      movie.appearances++;
+      await DB.incrementMovieAppearance(movie.id); // Increment appearance count in DB
     }
-    writeMovies(movies); // Save updated appearances back to the file
     res.json(shuffledMovies);
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -85,24 +86,22 @@ apiRouter.get('/vote', async (req, res) => {
 });
 
 
-
 //this on esubmits a vote for a movie or book on the vote page
 apiRouter.post('/vote', async (req, res) => {
   const { id } = req.body;
   try {
-    const movies = readMovies();
-    const movie = movies.find((movie) => movie.id === id);
+    const movie = await DB.getRandomMovies({ id }); // Find the movie in the DB by ID
     if (movie) {
-      movie.votes++;
+      await DB.incrementMovieVote(id); // Increment vote in DB
     }
-    writeMovies(movies); // Save updated votes back to the file
 
-    const shuffledMovies = getRandomMovies(movies);
-    // Increment the appearance count of both movies
+    // After voting, send new random movie options to the user
+    const shuffledMovies = await DB.getRandomMovies();
+    // Increment the appearance count of the new random movies
     for (const movie of shuffledMovies) {
-      movie.appearances++;
+      await DB.incrementMovieAppearance(movie.id);
     }
-    writeMovies(movies); // Save updated appearances again after voting
+
     res.json({ updatedMovies: shuffledMovies });
   } catch (error) {
     console.error('Error voting:', error);
@@ -123,8 +122,7 @@ apiRouter.post('/reset', (_req, res) => {
 //this one gets voting results from the results page
 apiRouter.get('/results', async (_req, res) => {
   try {
-    const movies = readMovies();
-    const sortedMovies = movies.sort((a, b) => b.votes - a.votes);
+    const sortedMovies = await DB.getMoviesSortedByVotes(); // Get movies sorted by votes from DB
     res.send(sortedMovies);
   } catch (error) {
     console.error('Error fetching results:', error);
@@ -135,6 +133,16 @@ apiRouter.get('/results', async (_req, res) => {
 apiRouter.delete('/auth/logout', (_req, res) => {
   res.clearCookie(authCookieName);
   res.status(204).end();
+});
+
+apiRouter.post('/reset', async (_req, res) => {
+  try {
+    await DB.resetVotesAndAppearances();
+    res.send({ msg: 'Data has been reset.' });
+  } catch (error) {
+    console.error('Error resetting data:', error);
+    res.status(500).send({ msg: 'An error occurred while resetting data.' });
+  }
 });
 
 app.use(function (err, req, res, next) {

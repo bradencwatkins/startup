@@ -69,7 +69,7 @@ export function App() {
       alert('You must be logged in to vote');
       return;
     }
-
+  
     try {
       const res = await fetch('/api/vote', {
         method: 'POST',
@@ -79,11 +79,11 @@ export function App() {
         },
         body: JSON.stringify({ id: movieId }),
       });
-  
+    
       const data = await res.json();
       if (res.ok) {
-        setOptions(data.updatedMovies);
         fetchResults();
+        fetchRandomMovies();
       } else {
         alert(data.msg);
       }
