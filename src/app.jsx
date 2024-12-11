@@ -20,6 +20,9 @@ export function App() {
   const [options, setOptions] = useState([]);
   const [results, setResults] = useState([]);
 
+  useEffect(() => {
+    console.log('Options:', options);  // Debugging the options state
+  }, [options]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

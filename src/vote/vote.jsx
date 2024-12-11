@@ -4,31 +4,11 @@ import AuthState from '../login/authState';
 
 export function Vote({ options, onVote, authState }) {
   
+  console.log(options);
   if (authState !== AuthState.Authenticated) {
     return <div>You must be logged in to vote.</div>;
   }
 
-  // useEffect(() => {
-  //   if (options.length > 0) {
-  //     options.forEach((option) => {
-  //       incrementAppearance(option.id);
-  //     });
-  //   }
-  // }, [options]);
-
-  // const incrementAppearance = async (movieId) => {
-  //   try {
-  //     await fetch('/api/increment-appearance', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ id: movieId }),
-  //     });
-  //   } catch (error) {
-  //     console.error('Error updating appearance:', error);
-  //   }
-  // };
 
   return (
     <main>

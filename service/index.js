@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
+const jwt = require('jsonwebtoken')
 const uuid = require('uuid');
 const app = express();
 const cors = require('cors');
