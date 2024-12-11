@@ -1,10 +1,14 @@
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const path = require('path');
+const fs = require('fs');
 const uuid = require('uuid');
 const app = express();
 const cors = require('cors');
+const DB = require('./database.js');
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -12,83 +16,98 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../')));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
+app.use(cookieParser());
+app.set('trust proxy', true);
 
+const authCookieName = 'token';
 
-let users = {};
-let movies = [
-    { id: 1, name: 'Jurassic Park', votes: 0, appearances: 0 },
-    { id: 2, name: 'Star Wars', votes: 0, appearances: 0 },
-    { id: 3, name: 'Harry Potter', votes: 0, appearances: 0 },
-    { id: 4, name: 'Jaws', votes: 0, appearances: 0 },
-];
+function readMovies() {
+  const moviesData = fs.readFileSync(path.join(__dirname, 'movies.json'), 'utf-8');
+  return JSON.parse(moviesData);
+}
+
+function writeMovies(movies) {
+  fs.writeFileSync(path.join(__dirname, 'movies.json'), JSON.stringify(movies, null, 2));
+}
 
 //this one creates a new user
 apiRouter.post('/auth/create', async (req, res) => {
-    const user = users[req.body.email];
-    if (user) {
+  try {
+    console.log("Received request to create user:", req.body);
+    if (await DB.getUser(req.body.email)) {
+      console.log(`User ${req.body.email} already exists`);
       res.status(409).send({ msg: 'Existing user' });
     } else {
-      const user = { email: req.body.email, password: req.body.password, token: uuid.v4() };
-      users[user.email] = user;
-      res.send({ token: user.token });
+      const user = await DB.createUser(req.body.email, req.body.password);
+      console.log(`User ${req.body.email} created successfully`);
+
+      // Set the cookie
+      setAuthCookie(res, user.token);
+
+      res.send({
+        id: user._id,
+      });
     }
-  });
+  } catch (error) {
+    console.error("Error in /auth/create endpoint:", error);
+    res.status(500).send({ msg: 'Internal Server Error' });
+  }
+});
 
 //this one logs in an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-    const user = users[req.body.email];
-    if (user && req.body.password === user.password) {
-      user.token = uuid.v4();
-      res.send({ token: user.token });
-    } else {
-      res.status(401).send({ msg: 'Unauthorized' });
+  const user = await DB.getUser(req.body.email);
+  if (user) {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      setAuthCookie(res, user.token);
+      res.send({ id: user._id });
+      return;
     }
-  });
-
-//this one logs out an existing user
-apiRouter.delete('/auth/logout', (req, res) => {
-    const user = Object.values(users).find((u) => u.token === req.body.token);
-    if (user) {
-      delete user.token;
-    }
-    res.status(204).end();
-  });
-
-//this one gets a random option when someone clicks one
-apiRouter.get('/vote', (_req, res) => {
-
-    const randomizedMovies = getRandomMovies();
-    randomizedMovies.forEach(movie => {
-        movie.appearances += 1;
-    });
-
-    res.send(randomizedMovies); 
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
 });
 
-function getRandomMovies() {
-    const shuffled = [...movies].sort(() => 0.5 - Math.random());
-    console.log('Shuffled Movies:', shuffled);
-    return shuffled.slice(0, 2);
+//this one gets a random option when someone clicks one
+apiRouter.get('/vote', async (req, res) => {
+  try {
+    const movies = readMovies();
+    const shuffledMovies = getRandomMovies(movies);
+    for (const movie of shuffledMovies) {
+      movie.appearances++;
+    }
+    writeMovies(movies); // Save updated appearances back to the file
+    res.json(shuffledMovies);
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    res.status(500).json({ msg: 'An error occurred while fetching movies.' });
   }
+});
+
+
 
 //this on esubmits a vote for a movie or book on the vote page
-apiRouter.post('/vote', (req, res) => {
-    const { id } = req.body;
-    const movie = movies.find(movie => movie.id === id);
-  
+apiRouter.post('/vote', async (req, res) => {
+  const { id } = req.body;
+  try {
+    const movies = readMovies();
+    const movie = movies.find((movie) => movie.id === id);
     if (movie) {
-      movie.votes += 1;
-      console.log(`Movie "${movie.name}" updated: votes = ${movie.votes}, appearances = ${movie.appearances}`);
-
-      const updatedMovies = getRandomMovies();
-      updatedMovies.forEach(movie => {
-        movie.appearances += 1;
-      });
-      res.json({ updatedMovies });
-    } else {
-      res.status(404).json({ msg: 'Movie not found' });
+      movie.votes++;
     }
-  });
+    writeMovies(movies); // Save updated votes back to the file
+
+    const shuffledMovies = getRandomMovies(movies);
+    // Increment the appearance count of both movies
+    for (const movie of shuffledMovies) {
+      movie.appearances++;
+    }
+    writeMovies(movies); // Save updated appearances again after voting
+    res.json({ updatedMovies: shuffledMovies });
+  } catch (error) {
+    console.error('Error voting:', error);
+    res.status(500).json({ msg: 'An error occurred while processing your vote.' });
+  }
+});
 
 //This one resets all votes and appearances
 apiRouter.post('/reset', (_req, res) => {
@@ -101,23 +120,43 @@ apiRouter.post('/reset', (_req, res) => {
 });
 
 //this one gets voting results from the results page
-apiRouter.get('/results', (_req, res) => {
-    const sortedMovies = [...movies].sort((a, b) => b.votes - a.votes);
-    console.log(sortedMovies);
+apiRouter.get('/results', async (_req, res) => {
+  try {
+    const movies = readMovies();
+    const sortedMovies = movies.sort((a, b) => b.votes - a.votes);
     res.send(sortedMovies);
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    res.status(500).send({ msg: 'An error occurred while fetching results.' });
+  }
 });
 
-apiRouter.delete('/auth/logout', (req, res) => {
-    const user = Object.values(users).find((u) => u.token === req.body.token);
-    if (user) {
-      delete user.token;
-    }
-    res.status(204).end(); 
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
+});
+
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
 });
 
 app.use((_req, res) => {
     res.sendFile(path.resolve(__dirname, '../index.html'));
 });
+
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
+function getRandomMovies(movies) {
+  const shuffled = [...movies].sort(() => 0.5 - Math.random());
+  console.log('Shuffled Movies:', shuffled);
+  return shuffled.slice(0, 2);
+}
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
