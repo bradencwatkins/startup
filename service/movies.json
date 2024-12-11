@@ -3,29 +3,29 @@
     "id": 1,
     "name": "Jurassic Park",
     "image_url": "/public/jurassic-park",
-    "votes": 4,
-    "appearances": 12
+    "votes": 0,
+    "appearances": 0
   },
   {
     "id": 2,
     "name": "Star Wars",
     "image_url": "star-wars.jpg",
-    "votes": 5,
-    "appearances": 9
+    "votes": 0,
+    "appearances": 0
   },
   {
     "id": 3,
     "name": "Jaws",
     "image_url": "/public/jaws.jpg",
-    "votes": 4,
-    "appearances": 10
+    "votes": 0,
+    "appearances": 0
   },
   {
     "id": 4,
     "name": "Harry Potter",
     "image_url": "/public/harry-potter.jpg",
-    "votes": 5,
-    "appearances": 13
+    "votes": 0,
+    "appearances": 0
   },
   {
     "id": 5,
@@ -108,6 +108,13 @@
     "id": 16,
     "name": "The Lord of the Rings",
     "image_url": "/public/the-lord-of-the-rings.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 17,
+    "name": "WallE",
+    "image_url": "/public/walle.jpg",
     "votes": 0,
     "appearances": 0
   }

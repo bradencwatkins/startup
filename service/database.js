@@ -26,9 +26,9 @@ async function initializeMovies() {
     } catch (error) {
       console.error("Error initializing movies:", error);
     }
-  }
+}
 
-  function readMovies() {
+function readMovies() {
     try {
       const moviesData = fs.readFileSync(path.join(__dirname, 'movies.json'), 'utf-8');
       return JSON.parse(moviesData);
@@ -36,7 +36,30 @@ async function initializeMovies() {
       console.error('Error reading movies file:', error);
       return [];
     }
-  }
+}
+
+async function clearMovies() {
+    try {
+      await movieCollection.deleteMany({}); // Delete all documents in the movies collection
+      console.log("All movies cleared from the database.");
+    } catch (error) {
+      console.error("Error clearing movies:", error);
+    }
+}
+
+async function reinitializeMovies() {
+    try {
+      // First, clear existing movies
+      await clearMovies();
+      
+      // Now, reinsert the movies from the JSON file
+      const moviesData = readMovies();
+      await movieCollection.insertMany(moviesData);
+      console.log("Movies reinitialized in the database.");
+    } catch (error) {
+      console.error("Error reinitializing movies:", error);
+    }
+}
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -130,4 +153,6 @@ module.exports = {
     getMoviesSortedByVotes,
     resetVotesAndAppearances,
     initializeMovies,
+    clearMovies,
+    reinitializeMovies,
   };

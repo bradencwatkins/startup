@@ -145,6 +145,16 @@ apiRouter.post('/reset', async (_req, res) => {
   }
 });
 
+app.post('/reinitialize-movies', async (req, res) => {
+  try {
+    await DB.reinitializeMovies(); // Reinitialize movies
+    res.json({ msg: 'Movies have been cleared and reinitialized.' });
+  } catch (error) {
+    console.error('Error reinitializing movies:', error);
+    res.status(500).json({ msg: 'An error occurred while reinitializing movies.' });
+  }
+});
+
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
 });
