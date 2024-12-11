@@ -26,5 +26,89 @@
     "image_url": "/public/harry-potter.jpg",
     "votes": 5,
     "appearances": 13
+  },
+  {
+    "id": 5,
+    "name": "Back to the Future",
+    "image_url": "/public/back-to-the-future.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 6,
+    "name": "Forrest Gump",
+    "image_url": "/public/forrest-gump.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 7,
+    "name": "Frozen",
+    "image_url": "/public/frozen.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 8,
+    "name": "Inception",
+    "image_url": "/public/inception.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 9,
+    "name": "Interstellar",
+    "image_url": "/public/interstellar.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 10,
+    "name": "Iron Man",
+    "image_url": "/public/iron-man.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 11,
+    "name": "Spiderman Spiderverse",
+    "image_url": "/public/spiderman-spiderverse.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 12,
+    "name": "Tangled",
+    "image_url": "/public/tangled.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 13,
+    "name": "The Avengers",
+    "image_url": "/public/the-avengers.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 14,
+    "name": "The Dark Knight",
+    "image_url": "/public/the-dark-knight.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 15,
+    "name": "The Lion King",
+    "image_url": "/public/the-lion-king.jpg",
+    "votes": 0,
+    "appearances": 0
+  },
+  {
+    "id": 16,
+    "name": "The Lord of the Rings",
+    "image_url": "/public/the-lord-of-the-rings.jpg",
+    "votes": 0,
+    "appearances": 0
   }
 ]
