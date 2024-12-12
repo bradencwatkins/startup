@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Jurassic Park",
-    "image_url": "/public/jurassic-park",
+    "image_url": "/public/jurassic-park.jpg",
     "votes": 0,
     "appearances": 0
   },

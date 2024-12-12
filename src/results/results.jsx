@@ -3,7 +3,6 @@ import "./results.css";
 
 export function Results({ options }) {
   const sortedOptions = [...options].sort((a, b) => b.votes - a.votes);
-  console.log(options);
   
   return (
     <main className='container-fluid text-center'>

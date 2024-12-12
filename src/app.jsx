@@ -14,15 +14,11 @@ import Authenticated from './login/authenticated';
 export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const [token, setToken] = useState(localStorage.getItem('token'|| ''));
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [authState, setAuthState] = useState(localStorage.getItem('token') ? AuthState.Authenticated : AuthState.Unauthenticated);
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    console.log('Options:', options);  // Debugging the options state
-  }, [options]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -46,7 +42,6 @@ export function App() {
     try {
       const res = await fetch('/api/vote');
       const data = await res.json();
-      console.log('Movies Data:', data);  // Check if 'appearances' is in the data
       setOptions(data);
     } catch (error) {
       console.error('Error fetching random movies:', error);
@@ -57,7 +52,6 @@ export function App() {
     try {
       const res = await fetch('/api/results');
       const data = await res.json();
-      console.log('Results Data:', data);
       setResults(data);
     } catch (error) {
       console.error('Error fetching results:', error);
@@ -101,12 +95,11 @@ export function App() {
   
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem('token', data.token);
+      // Assume session is set by the backend (no token needed)
       localStorage.setItem('userName', email);
-      setToken(data.token);
       setUserName(email);
       setAuthState(AuthState.Authenticated);
-      setMessage('Logged in successfully');
+      setMessage(data.msg || 'Logged in successfully');
     } else {
       const data = await res.json();
       setMessage(data.msg || 'Error logging in');
@@ -119,15 +112,12 @@ export function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-
+  
     if (res.ok) {
       const data = await res.json();
-      setToken(data.token);
-      localStorage.setItem('token', data.token);
       setUserName(email);
-      setAuthState(AuthState.Authenticated); 
-      localStorage.setItem('userName', email);
-      setMessage('Signed up and logged in successfully');
+      setAuthState(AuthState.Authenticated);
+      setMessage(data.msg || 'Sign up and login successful');
     } else {
       const data = await res.json();
       setMessage(data.msg || 'Error signing up');

@@ -36,39 +36,53 @@ function writeMovies(movies) {
 
 //this one creates a new user
 apiRouter.post('/auth/create', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    console.log("Received request to create user:", req.body);
-    if (await DB.getUser(req.body.email)) {
-      console.log(`User ${req.body.email} already exists`);
-      res.status(409).send({ msg: 'Existing user' });
-    } else {
-      const user = await DB.createUser(req.body.email, req.body.password);
-      console.log(`User ${req.body.email} created successfully`);
-
-      // Set the cookie
-      setAuthCookie(res, user.token);
-
-      res.send({
-        id: user._id,
-      });
+    // Check if user already exists
+    const existingUser = await DB.getUserByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ msg: 'User already exists' });
     }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = await DB.createUser({ email, password: hashedPassword });
+
+    // Set session or cookie
+    req.session.userId = newUser.id; // Save user ID in session
+    req.session.userEmail = newUser.email; // Optionally save the email as well
+    res.json({ msg: 'User created and logged in' });
   } catch (error) {
-    console.error("Error in /auth/create endpoint:", error);
-    res.status(500).send({ msg: 'Internal Server Error' });
+    console.error('Error creating user:', error);
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
 //this one logs in an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await DB.getUser(req.body.email);
-  if (user) {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      setAuthCookie(res, user.token);
-      res.send({ id: user._id });
-      return;
+  const { email, password } = req.body;
+  try {
+    const user = await DB.getUserByEmail(email); // Fetch user by email from DB
+    if (!user) {
+      return res.status(401).json({ msg: 'User not found, please sign up first.' });
     }
+
+    // Verify password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ msg: 'Invalid credentials' });
+    }
+
+    // If password matches, set session or cookie (example using Express session)
+    req.session.userId = user.id; // Save user ID in session
+    req.session.userEmail = user.email; // Optionally save the email as well
+    res.json({ msg: 'Logged in successfully' });
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.status(500).json({ msg: 'Server error' });
   }
-  res.status(401).send({ msg: 'Unauthorized' });
 });
 
 //this one gets a random option when someone clicks one

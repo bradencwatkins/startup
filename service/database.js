@@ -28,6 +28,10 @@ async function initializeMovies() {
     }
 }
 
+async function getUserByEmail(email) {
+  return userCollection.findOne({ email: email });
+}
+
 function readMovies() {
     try {
       const moviesData = fs.readFileSync(path.join(__dirname, 'movies.json'), 'utf-8');
@@ -155,4 +159,5 @@ module.exports = {
     initializeMovies,
     clearMovies,
     reinitializeMovies,
+    getUserByEmail,
   };
