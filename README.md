@@ -78,3 +78,9 @@ resemblance of a website. Very cool.
 **Backend service endpoints** - many examples of POST ans GET service endpoints  
 **Frontend service endpoints** - functions call GET and POST from backend using fetch  
 
+## LOGIN deliverable  
+**New User Registration** - It creates users and stores them to mongo, but login is broken
+**User Authentication** - It wouldn't seem to work  
+**Stores data in MongoDB** - It did this well  
+**Retrieves credentials from Mongo** - It stored and retrieved, I just couldn't apply
+**Restricts functionality on authentication** - This worked, Vote and Results wouldnt display unless logged in  
