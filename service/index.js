@@ -36,61 +36,69 @@ function writeMovies(movies) {
 
 //this one creates a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    // Check if user already exists
-    const existingUser = await DB.getUserByEmail(email);
-    if (existingUser) {
-      return res.status(400).json({ msg: 'User already exists' });
-    }
+  if (await DB.getUser(req.body.email)) {
+    res.status(409).send({ msg: 'Existing user' });
+  } else {
+    const user = await DB.createUser(req.body.email, req.body.password);
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    setAuthCookie(res, user.token);
 
-    // Create a new user
-    const newUser = await DB.createUser({ email, password: hashedPassword });
-
-    // Set session or cookie
-    req.session.userId = newUser.id; // Save user ID in session
-    req.session.userEmail = newUser.email; // Optionally save the email as well
-    res.json({ msg: 'User created and logged in' });
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ msg: 'Server error' });
+    res.send({
+      id: user._id,
+    });
   }
 });
 
 //this one logs in an existing user
 apiRouter.post('/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await DB.getUserByEmail(email); // Fetch user by email from DB
-    if (!user) {
-      return res.status(401).json({ msg: 'User not found, please sign up first.' });
+  const user = await DB.getUser(req.body.email);
+  if (user) {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      setAuthCookie(res, user.token);
+      res.send({ id: user._id });
+      return;
     }
-
-    // Verify password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
-    }
-
-    // If password matches, set session or cookie (example using Express session)
-    req.session.userId = user.id; // Save user ID in session
-    req.session.userEmail = user.email; // Optionally save the email as well
-    res.json({ msg: 'Logged in successfully' });
-  } catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ msg: 'Server error' });
   }
+  res.status(401).send({ msg: 'Unauthorized' });
+});
+
+async function isAuthenticated(req, res, next) {
+  const token = req.cookies[authCookieName];
+  if (!token) {
+    return res.status(401).send({ msg: 'Unauthorized' });
+  }
+
+  // Check if the token is valid by finding the user in the database
+  const user = await DB.getUserByToken(token);
+  if (!user) {
+    return res.status(401).send({ msg: 'Unauthorized' });
+  }
+
+  req.user = user; 
+  next(); 
+}
+
+apiRouter.use(isAuthenticated);
+
+
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
+});
+
+const secureApiRouter = express.Router();
+app.use('/api', secureApiRouter);
+
+apiRouter.use(async (req, res, next) => {
+  next();
 });
 
 //this one gets a random option when someone clicks one
 apiRouter.get('/vote', async (req, res) => {
   try {
-    const shuffledMovies = await DB.getRandomMovies(); // Fetch random movies from DB
+    const shuffledMovies = await DB.getRandomMovies();
     for (const movie of shuffledMovies) {
-      await DB.incrementMovieAppearance(movie.id); // Increment appearance count in DB
+      await DB.incrementMovieAppearance(movie.id);
     }
     res.json(shuffledMovies);
   } catch (error) {
@@ -104,14 +112,12 @@ apiRouter.get('/vote', async (req, res) => {
 apiRouter.post('/vote', async (req, res) => {
   const { id } = req.body;
   try {
-    const movie = await DB.getRandomMovies({ id }); // Find the movie in the DB by ID
+    const movie = await DB.getRandomMovies({ id });
     if (movie) {
-      await DB.incrementMovieVote(id); // Increment vote in DB
+      await DB.incrementMovieVote(id); 
     }
 
-    // After voting, send new random movie options to the user
     const shuffledMovies = await DB.getRandomMovies();
-    // Increment the appearance count of the new random movies
     for (const movie of shuffledMovies) {
       await DB.incrementMovieAppearance(movie.id);
     }
@@ -136,7 +142,7 @@ apiRouter.post('/reset', (_req, res) => {
 //this one gets voting results from the results page
 apiRouter.get('/results', async (_req, res) => {
   try {
-    const sortedMovies = await DB.getMoviesSortedByVotes(); // Get movies sorted by votes from DB
+    const sortedMovies = await DB.getMoviesSortedByVotes(); 
     res.send(sortedMovies);
   } catch (error) {
     console.error('Error fetching results:', error);
@@ -161,7 +167,7 @@ apiRouter.post('/reset', async (_req, res) => {
 
 app.post('/reinitialize-movies', async (req, res) => {
   try {
-    await DB.reinitializeMovies(); // Reinitialize movies
+    await DB.reinitializeMovies();
     res.json({ msg: 'Movies have been cleared and reinitialized.' });
   } catch (error) {
     console.error('Error reinitializing movies:', error);
@@ -184,6 +190,8 @@ function setAuthCookie(res, authToken) {
     sameSite: 'strict',
   });
 }
+
+
 
 function getRandomMovies(movies) {
   const shuffled = [...movies].sort(() => 0.5 - Math.random());

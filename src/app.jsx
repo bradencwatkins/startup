@@ -15,7 +15,7 @@ export function App() {
 
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const [token, setToken] = useState(localStorage.getItem('token') || '');
-  const [authState, setAuthState] = useState(localStorage.getItem('token') ? AuthState.Authenticated : AuthState.Unauthenticated);
+  const [authState, setAuthState] = useState(AuthState.Unauthenticated);
   const [message, setMessage] = useState('');
   const [options, setOptions] = useState([]);
   const [results, setResults] = useState([]);
@@ -87,22 +87,36 @@ export function App() {
   };
 
   const handleLogin = async (email, password) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
   
-    if (res.ok) {
-      const data = await res.json();
-      // Assume session is set by the backend (no token needed)
-      localStorage.setItem('userName', email);
-      setUserName(email);
-      setAuthState(AuthState.Authenticated);
-      setMessage(data.msg || 'Logged in successfully');
-    } else {
-      const data = await res.json();
-      setMessage(data.msg || 'Error logging in');
+      // Check if the response status is not OK (status codes 400-500 range)
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ msg: 'An error occurred during login' })); // Safe fallback
+        setMessage(errorData.msg || 'Error logging in');
+        return;
+      }
+  
+      // Try to parse the response, catch if it's not JSON
+      const data = await res.json().catch(() => null);
+  
+      if (data && data.id) {
+        // If the login was successful, store data and update UI
+        localStorage.setItem('userName', email);
+        setUserName(email);
+        setAuthState(AuthState.Authenticated);
+        setMessage('Logged in successfully');
+      } else {
+        setMessage('Login failed, please check your credentials');
+      }
+    } catch (error) {
+      // Catch any unexpected errors such as network issues or malformed responses
+      console.error('Login error:', error);
+      setMessage('An unexpected error occurred during login');
     }
   };
 
@@ -189,9 +203,9 @@ export function App() {
         <Routes>
           <Route
             path='/'
-            element={
+            element={ 
               <Login
-                userName={userName}
+              userName={userName}
                 authState={authState}
                 onAuthChange={handleAuthChange}
                 onLogout={handleLogout}

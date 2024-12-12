@@ -4,7 +4,7 @@ import { Unauthenticated } from './unauthenticated';
 import Authenticated from './authenticated';
 import AuthState from './authState';
 
-export function Login({ userName, authState, onAuthChange, onLogin, onLogout, onSignUp }) {
+export function Login({ userName, authState, onAuthChange, onLogin, onLogout, onSignUp, }) {
   return (
     <main className='container-fluid text-center'>
       <div>
