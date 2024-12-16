@@ -5,19 +5,15 @@ Welcome to my startup. I will soon be a billionaire i swear
 
 # MARRYABOOK  
 ## Intro to the Site  
-Are you a returned missionary who is sick of not being able to find the one?  
-Were you used to using Area Book on your mission and wish there was a dating equivelant?  
-  
-**MarryaBook** is for you!! (name subject to change)  
-  
-The website works in a way similar to other dating sites/apps, but with a key improevment...   
-MarryaBook uses your friends and friends of friends to find your future wife. After linking your social media, Marryabook will give you suggestions on who to go on dates with.  
-  
-Other features:  
-  -Calendar to help you plan times for dates  
-  -Gives you date ideas  
-  -Referral feature (connect with friends using social media to increase your dating pool “area expansion”)  
-  -Page with advice from prophets and apostles on dating and marriage  
+Do you want to know what the best movie or book is?
+
+Are you tired of not knowing what to watch or what to read?
+
+MarryaBook is for you!!
+
+This website allows you to voice your opinion on what the best media is on the market today!
+
+By logging in and going to the vote section, you can let others know what you think is the best movies to watch and books to read. 
   
 [Here](https://drive.google.com/file/d/1Eb0WA7tvIowid-mEEZiHedwYJ79e5i2W/view?usp=sharing) is an example of what the website home page might look like  
 
